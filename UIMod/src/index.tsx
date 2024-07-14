@@ -5,21 +5,25 @@ import { bindValue, trigger, useValue } from "cs2/api";
 interface CompassSVGProps {
     rotation: number;
 }
+const compassRotation$ = bindValue<number>('Compass', 'Rotation');
 
-const CompassSVG: React.FC<CompassSVGProps> = ({ rotation }) => (
-    <svg viewBox="0 0 100 100" style={{ width: '40rem', height: '40rem' }}>
-        <circle cx="50" cy="50" r="45" fill="#87CEEB" stroke="white" strokeWidth="2" />
-        <g transform={`rotate(${rotation} 50 50)`}>
-            <path d="M50 15 L54 50 L50 85 L46 50 Z" fill="red" stroke="none" />
-            <path d="M50 50 L46 50 L50 85 L54 50 Z" fill="white" stroke="none" />
-        </g>
-        <circle cx="50" cy="50" r="3" fill="black" />
-        <text x="50" y="25" textAnchor="middle" fill="white" fontSize="10">N</text>
-        <text x="75" y="52" textAnchor="middle" fill="white" fontSize="10">E</text>
-        <text x="50" y="80" textAnchor="middle" fill="white" fontSize="10">S</text>
-        <text x="25" y="52" textAnchor="middle" fill="white" fontSize="10">W</text>
-    </svg>
-);
+const CompassSVG: React.FC<CompassSVGProps> = ({ rotation }) => {
+    console.log('CompassSVG rotation:', rotation);  // Add this line
+    return (
+        <svg viewBox="0 0 100 100" style={{ width: '40rem', height: '40rem' }}>
+            <circle cx="50" cy="50" r="45" fill="#87CEEB" stroke="white" strokeWidth="2" />
+            <g transform={`rotate(${rotation} 50 50)`}>
+                <path d="M50 15 L54 50 L50 85 L46 50 Z" fill="red" stroke="none" />
+                <path d="M50 50 L46 50 L50 85 L54 50 Z" fill="white" stroke="none" />
+            </g>
+            <circle cx="50" cy="50" r="3" fill="black" />
+            <text x="50" y="25" textAnchor="middle" fill="white" fontSize="10">N</text>
+            <text x="75" y="52" textAnchor="middle" fill="white" fontSize="10">E</text>
+            <text x="50" y="80" textAnchor="middle" fill="white" fontSize="10">S</text>
+            <text x="25" y="52" textAnchor="middle" fill="white" fontSize="10">W</text>
+        </svg>
+    );
+};
 
 const CustomMenuButton: React.FC = () => {
     const [showSlider, setShowSlider] = useState<boolean>(false);
@@ -28,7 +32,6 @@ const CustomMenuButton: React.FC = () => {
 
     const handleClick = (): void => {
         setShowSlider(!showSlider);
-        trigger("map_texture", "MainWindowCreate");
     };
 
     const handleSliderChange = (event: React.MouseEvent<HTMLDivElement>): void => {
@@ -37,7 +40,8 @@ const CustomMenuButton: React.FC = () => {
             const x = event.clientX - rect.left;
             const percentage = Math.min(Math.max(x / rect.width, 0), 1);
             const newRotation = Math.round(percentage * 359);
-            setRotation(newRotation);
+            console.log("compassRotation$ value: " + compassRotation$.value);
+            setRotation(compassRotation$.value);
         }
     };
 
@@ -61,7 +65,7 @@ const CustomMenuButton: React.FC = () => {
                 onClick={handleClick}
             >
                 <div style={{ width: '40rem', height: '40rem' }}  className="w-10 h-10">
-                    <CompassSVG rotation={rotation} />
+                    <CompassSVG rotation={useValue(compassRotation$)} />
                 </div>
             </button>
             {showSlider && (

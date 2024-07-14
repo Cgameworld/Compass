@@ -16,6 +16,7 @@ namespace Compass
             if (GameManager.instance.modManager.TryGetExecutableAsset(this, out var asset))
                 log.Info($"Current mod asset at {asset.path}");
 
+            updateSystem.UpdateBefore<CompassUISystem>(SystemUpdatePhase.Modification3); // Before
         }
 
         public void OnDispose()
