@@ -1,11 +1,7 @@
 ﻿using Colossal.UI.Binding;
-using Game;
+using Game.Rendering;
 using Game.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Game.UI.InGame;
 using UnityEngine;
 
 namespace Compass
@@ -22,15 +18,25 @@ namespace Compass
 
             this.rotationBinding = new GetterValueBinding<float>("Compass","Rotation", () => rotation);
             AddBinding(this.rotationBinding);
+
+            this.AddBinding(new TriggerBinding("Compass", "SetRotation", this.SetRotation));
+        }
+
+        private void SetRotation()
+        {
+            if (Camera.main != null)
+            {
+                var existingRotation = World.GetExistingSystemManaged<CameraUpdateSystem>().activeCameraController.rotation;
+                World.GetExistingSystemManaged<CameraUpdateSystem>().activeCameraController.rotation = new Vector3(existingRotation.x, 0f, existingRotation.z);
+            }
+            
         }
 
         protected override void OnUpdate()
         {
             if (Camera.main != null)
             {
-                Vector3 eulerAngles = Camera.main.transform.rotation.eulerAngles;
-                //Mod.log.Info("Camera rotation (Euler angles): " + eulerAngles);
-                rotation = eulerAngles.y;
+                rotation = World.GetExistingSystemManaged<CameraUpdateSystem>().activeCameraController.rotation.y;
                 rotationBinding.Update();
             }
         }

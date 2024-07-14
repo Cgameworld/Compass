@@ -8,7 +8,7 @@ const register: ModRegistrar = (moduleRegistry) => {
     const CustomMenuButton = () => {
         const RotationNum: number = useValue(Rotation$);
         return <div>
-            <button id="MapTextureReplacer-MainGameButton" className="button_ke4 button_ke4 button_h9N" onClick={() => trigger("map_texture", "MainWindowCreate")}>
+            <button id="MapTextureReplacer-MainGameButton" className="button_ke4 button_ke4 button_h9N" onClick={() => trigger("Compass", "SetRotation")}>
                 {RotationNum}
             </button>
         </div>;
