@@ -12,17 +12,16 @@ namespace Compass
 {
     public partial class CompassUISystem : UISystemBase
     {
-        private Dictionary<string, Action<int>> handlers = new Dictionary<string, Action<int>>();
         private float rotation;
+
+        private GetterValueBinding<float> rotationBinding;
 
         protected override void OnCreate()
         {
             base.OnCreate();
 
-            this.AddUpdateBinding(new GetterValueBinding<float>("Compass", "Rotation", () =>
-            {
-                return rotation;
-            }));
+            this.rotationBinding = new GetterValueBinding<float>("Compass","Rotation", () => rotation);
+            AddBinding(this.rotationBinding);
         }
 
         protected override void OnUpdate()
@@ -30,8 +29,9 @@ namespace Compass
             if (Camera.main != null)
             {
                 Vector3 eulerAngles = Camera.main.transform.rotation.eulerAngles;
-                Mod.log.Info("Camera rotation (Euler angles): " + eulerAngles);
+                //Mod.log.Info("Camera rotation (Euler angles): " + eulerAngles);
                 rotation = eulerAngles.y;
+                rotationBinding.Update();
             }
         }
     }
