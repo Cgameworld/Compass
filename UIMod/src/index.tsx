@@ -96,7 +96,7 @@ const register: ModRegistrar = (moduleRegistry) => {
             console.log("value changed");
         };
 
-        const RotationNum: number = useValue(Rotation$);
+        const RotationNum: number = Math.round((useValue(Rotation$) + 360) % 360);
 
         return (
             <div className="panel_YqS expanded collapsible advisor-panel_dXi advisor-panel_mrr top-right-panel_A2r" style={{

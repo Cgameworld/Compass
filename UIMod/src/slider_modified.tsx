@@ -93,7 +93,7 @@ const SliderMod: React.FC<SliderModProps> = ({ min, max, sliderPos, onInputChang
                 type="text"
                 value={inputValue}
                 onChange={handleInputChange}
-                style={{marginLeft: '25rem'}}
+                style={{marginLeft: '25rem', width:'15%'}}
                 />
             </div>
     );
