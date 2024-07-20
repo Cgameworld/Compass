@@ -1,5 +1,5 @@
 import engine from 'cohtml/cohtml';
-import React, { useLayoutEffect, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 interface SliderModProps {
     min: number;
@@ -25,6 +25,17 @@ const SliderMod: React.FC<SliderModProps> = ({ min, max, sliderPos, onInputChang
             setSliderWidth(sliderWidth);
         }
     }, []);
+
+    useEffect(() => {
+        const sliderWidth = (sliderPos - min) / scale;
+        if (sliderWidth > max) {
+            setSliderWidth(max / scale);
+        }
+        else {
+            setSliderWidth(sliderWidth);
+        }
+        setInputValue(sliderPos); //??
+    }, [sliderPos]);
 
     const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
