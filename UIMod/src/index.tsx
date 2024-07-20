@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 
 const register: ModRegistrar = (moduleRegistry) => {
     const Rotation$ = bindValue<number>('Compass', 'Rotation');
-    const textDir = false; // toggle relative text direction
 
     const getDirection = (rotation: number): string => {
         const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
@@ -16,6 +15,7 @@ const register: ModRegistrar = (moduleRegistry) => {
 
     const CustomMenuButton: React.FC = () => {
         const [showSettings, setShowSettings] = useState(false);
+        const [textDir, setTextDir] = useState(false);
         const RotationNum: number = useValue(Rotation$);
 
         const toggleSettings = () => {
@@ -29,7 +29,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                     const settingsRoot = document.createElement('div');
                     settingsRoot.id = 'top-right-layout_sSC';
                     tutorialRenderer.appendChild(settingsRoot);
-                    ReactDOM.render(<SettingsWindow onClose={toggleSettings} />, settingsRoot);
+                    ReactDOM.render(<SettingsWindow onClose={toggleSettings} textDir={textDir} setTextDir={setTextDir} />, settingsRoot);
 
                     return () => {
                         ReactDOM.unmountComponentAtNode(settingsRoot);
@@ -37,7 +37,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                     };
                 }
             }
-        }, [showSettings]);
+        }, [showSettings, textDir]);
 
         return (
             <div>
@@ -86,14 +86,18 @@ const register: ModRegistrar = (moduleRegistry) => {
         );
     };
 
-    const SettingsWindow: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+    const SettingsWindow: React.FC<{ onClose: () => void, textDir: boolean, setTextDir: (value: boolean) => void }> = ({ onClose, textDir, setTextDir }) => {
+        const toggleTextDir = () => {
+            setTextDir(!textDir);
+        };
+
         return (
             <div className="panel_YqS expanded collapsible advisor-panel_dXi advisor-panel_mrr top-right-panel_A2r" style={{
                 position: 'absolute',
                 top: '50rem',
                 right: '0rem',
                 display: 'flex',
-                width: '400rem',
+                width: '310rem',
                 height: '400rem'
             }}>
                 <div className="header_H_U header_Bpo child-opacity-transition_nkS">
@@ -105,7 +109,35 @@ const register: ModRegistrar = (moduleRegistry) => {
                         </button>
                     </div>
                 </div>
-                
+                <div className="content_XD5 content_AD7 child-opacity-transition_nkS">
+                    <div className="scrollable_DXr y_SMM scrollable_wt8">
+                        <div className="content_gqa">
+                            <div className="infoview-panel-section_RXJ">
+                                <div className="content_1xS focusable_GEc item-focused_FuT">
+                                    <div className="row_S2v">
+                                        <div className="left_Lgw row_S2v" style={{fontSize:'18rem', alignItems:'center'}}>Cardinal Direction Mode</div>
+                                        <div className="right_k3O row_S2v">
+                                            <button
+                                                className="button_WWa button_SH8"
+                                                style={{
+                                                    backgroundColor: textDir ? 'var(--selectedColor)' : 'inherit',
+                                                    color: textDir ? 'white' : 'inherit'
+                                                }}
+                                                onClick={toggleTextDir}
+                                            >
+                                                {textDir ? 'On' : 'Off'}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="row_S2v">
+                                        <button className="button_WWa button_SH8" style={{justifyContent: 'center'}}  onClick={() => trigger("Compass", "SetRotation")}>Reset to North</button>
+                                    </div>
+                                    <div className="bottom-padding_JS3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     };
