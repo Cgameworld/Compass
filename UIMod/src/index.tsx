@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ModRegistrar } from "cs2/modding";
 import { bindValue, trigger, useValue } from "cs2/api";
 import ReactDOM from 'react-dom';
+import SliderMod from './slider_modified';
 
 const register: ModRegistrar = (moduleRegistry) => {
     const Rotation$ = bindValue<number>('Compass', 'Rotation');
@@ -91,6 +92,12 @@ const register: ModRegistrar = (moduleRegistry) => {
             setTextDir(!textDir);
         };
 
+        const handleSliderInputChange = (newValue: number) => {
+            console.log("value changed");
+        };
+
+        const RotationNum: number = useValue(Rotation$);
+
         return (
             <div className="panel_YqS expanded collapsible advisor-panel_dXi advisor-panel_mrr top-right-panel_A2r" style={{
                 position: 'absolute',
@@ -114,6 +121,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                         <div className="content_gqa">
                             <div className="infoview-panel-section_RXJ">
                                 <div className="content_1xS focusable_GEc item-focused_FuT">
+                                    <SliderMod min={0} max={360} sliderPos={RotationNum} onInputChange={handleSliderInputChange} />
                                     <div className="row_S2v">
                                         <div className="left_Lgw row_S2v" style={{fontSize:'18rem', alignItems:'center'}}>Cardinal Direction Mode</div>
                                         <div className="right_k3O row_S2v">
@@ -128,7 +136,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                                                 {textDir ? 'On' : 'Off'}
                                             </button>
                                         </div>
-                                    </div>
+                                        </div>
                                     <div className="row_S2v">
                                         <button className="button_WWa button_SH8" style={{justifyContent: 'center'}}  onClick={() => trigger("Compass", "SetRotation")}>Reset to North</button>
                                     </div>
