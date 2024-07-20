@@ -15,10 +15,13 @@
 
 	<ItemGroup>
 		<Reference Include="Cinemachine">
-		  <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Cities Skylines II\Cities2_Data\Managed\Cinemachine.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="Colossal.UI">
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="Colossal.UI.Binding">
-		  <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Cities Skylines II\Cities2_Data\Managed\Colossal.UI.Binding.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="Game">
 			<Private>false</Private>
@@ -68,6 +71,15 @@
 
   <ItemGroup>
     <PackageReference Include="Lib.Harmony" Version="2.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Icons\CompassNeedle.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Icons\FrameCircle.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   
   <Target Name="BuildUI" AfterTargets="AfterBuild">
