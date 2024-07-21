@@ -64,15 +64,18 @@ const SliderMod: React.FC<SliderModProps> = ({ title, min, max, sliderPos, onInp
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = Number(event.target.value);
-        setInputValue(newValue);
-        if (newValue >= min && newValue <= max) {
-            setSliderWidth((newValue - min) / scale);
+        const value = event.target.value;
+        if (value === "" || /^[0-9]+$/.test(value)) {
+            const newValue = Number(event.target.value);
+            setInputValue(newValue);
+            if (newValue >= min && newValue <= max) {
+                setSliderWidth((newValue - min) / scale);
+            }
+            else if (newValue > max) {
+                setSliderWidth(max / scale);
+            }
+            onInputChange(newValue);
         }
-        else if (newValue > max) {
-            setSliderWidth(max / scale);
-        }
-        onInputChange(newValue);
     };
 
     return (
