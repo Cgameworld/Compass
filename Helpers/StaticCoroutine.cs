@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace FirstPersonCamera.Helpers
+namespace Compass.Helpers
 {
     //https://forum.unity.com/threads/c-coroutines-in-static-functions.134546/
     public class StaticCoroutine : MonoBehaviour

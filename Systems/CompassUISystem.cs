@@ -1,5 +1,5 @@
 ﻿using Colossal.UI.Binding;
-using FirstPersonCamera.Helpers;
+using Compass.Helpers;
 using Game.Rendering;
 using Game.UI;
 using Game.UI.InGame;
