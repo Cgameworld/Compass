@@ -3,6 +3,7 @@ import { ModRegistrar } from "cs2/modding";
 import { bindValue, trigger, useValue } from "cs2/api";
 import ReactDOM from 'react-dom';
 import SliderMod from './slider_modified';
+import engine from 'cohtml/cohtml';
 
 const register: ModRegistrar = (moduleRegistry) => {
     const Rotation$ = bindValue<number>('Compass', 'Rotation');
@@ -21,6 +22,7 @@ const register: ModRegistrar = (moduleRegistry) => {
 
         const toggleSettings = () => {
             setShowSettings(!showSettings);
+            engine.trigger("audio.playSound", "select-item", 1);
         };
 
         useEffect(() => {
@@ -90,6 +92,7 @@ const register: ModRegistrar = (moduleRegistry) => {
     const SettingsWindow: React.FC<{ onClose: () => void, textDir: boolean, setTextDir: (value: boolean) => void }> = ({ onClose, textDir, setTextDir }) => {
         const toggleTextDir = () => {
             setTextDir(!textDir);
+            engine.trigger("audio.playSound", "select-item", 1);
         };
 
         const handleSliderInputChange = (newValue: number) => {
@@ -138,7 +141,10 @@ const register: ModRegistrar = (moduleRegistry) => {
                                     </div>
                                     <SliderMod title={"Bearing"} min={0} max={360} sliderPos={RotationNum} onInputChange={handleSliderInputChange} />                                   
                                     <div className="row_S2v" style={{ paddingTop: '10rem', paddingBottom: '10rem' }}>
-                                        <button className="button_WWa button_SH8" style={{justifyContent: 'center'}}  onClick={() => trigger("Compass", "SetToNorth")}>Reset to North</button>
+                                        <button className="button_WWa button_SH8" style={{ justifyContent: 'center' }} onClick={() => {
+                                            trigger("Compass", "SetToNorth");
+                                            engine.trigger("audio.playSound", "select-item", 1);
+                                        }}>Reset to North</button>
                                     </div>
                                     <div className="bottom-padding_JS3"></div>
                                 </div>
