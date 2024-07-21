@@ -4,8 +4,12 @@ import { bindValue, trigger, useValue } from "cs2/api";
 import ReactDOM from 'react-dom';
 import SliderMod from './slider_modified';
 import engine from 'cohtml/cohtml';
+import { VanillaComponentsResolver } from '../types/internal';
 
 const register: ModRegistrar = (moduleRegistry) => {
+
+    const { DescriptionTooltip } = VanillaComponentsResolver.instance;
+
     const Rotation$ = bindValue<number>('Compass', 'Rotation');
 
     const getDirection = (rotation: number): string => {
@@ -43,7 +47,7 @@ const register: ModRegistrar = (moduleRegistry) => {
         }, [showSettings, textDir]);
 
         return (
-            <div>
+            <DescriptionTooltip title="Compass" description={Math.round((useValue(Rotation$) + 360) % 360) + "\u00b0 " + getDirection(RotationNum) + " - Click to open options"}> 
                 <button
                     id="MapTextureReplacer-MainGameButton"
                     className="button_ke4 button_h9N"
@@ -85,7 +89,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                         )}
                     </div>
                 </button>
-            </div>
+            </DescriptionTooltip>
         );
     };
 
