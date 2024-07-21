@@ -94,6 +94,7 @@ const register: ModRegistrar = (moduleRegistry) => {
 
         const handleSliderInputChange = (newValue: number) => {
             console.log("value changed");
+            trigger("Compass", "SetToAngle", newValue);
         };
 
         const RotationNum: number = Math.round((useValue(Rotation$) + 360) % 360);
@@ -138,7 +139,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                                     </div>
                                     <SliderMod title={"Bearing"} min={0} max={360} sliderPos={RotationNum} onInputChange={handleSliderInputChange} />                                   
                                     <div className="row_S2v" style={{ paddingTop: '10rem', paddingBottom: '10rem' }}>
-                                        <button className="button_WWa button_SH8" style={{justifyContent: 'center'}}  onClick={() => trigger("Compass", "SetRotation")}>Reset to North</button>
+                                        <button className="button_WWa button_SH8" style={{justifyContent: 'center'}}  onClick={() => trigger("Compass", "SetToNorth")}>Reset to North</button>
                                     </div>
                                     <div className="bottom-padding_JS3"></div>
                                 </div>

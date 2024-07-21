@@ -21,10 +21,21 @@ namespace Compass
             this.rotationBinding = new GetterValueBinding<float>("Compass","Rotation", () => rotation);
             AddBinding(this.rotationBinding);
 
-            this.AddBinding(new TriggerBinding("Compass", "SetRotation", this.SetRotation));
+            this.AddBinding(new TriggerBinding("Compass", "SetToNorth", this.SetToNorth));
+
+            this.AddBinding(new TriggerBinding<float>("Compass", "SetToAngle", (angle) => this.SetToAngle(angle)));
         }
 
-        private void SetRotation()
+        private void SetToAngle(float angle)
+        {
+            float angleConverted = (angle + 360) % 360;
+            var cameraUpdateSystem = World.GetExistingSystemManaged<CameraUpdateSystem>();
+            var existingRotation = cameraUpdateSystem.activeCameraController.rotation;
+            var targetRotation = new Vector3(existingRotation.x, angleConverted, existingRotation.z);
+            cameraUpdateSystem.activeCameraController.rotation = targetRotation;
+        }
+
+        private void SetToNorth()
         {
             if (Camera.main != null)
             {
