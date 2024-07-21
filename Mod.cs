@@ -21,7 +21,7 @@ namespace Compass
             if (GameManager.instance.modManager.TryGetExecutableAsset(this, out var asset))
                 log.Info("Mod Directory:" + Path.GetDirectoryName(asset.path));
 
-            updateSystem.UpdateBefore<CompassUISystem>(SystemUpdatePhase.Modification3); // Before
+            updateSystem.UpdateBefore<CompassUISystem>(SystemUpdatePhase.UIUpdate);
 
             //add custom icons
             UIManager.defaultUISystem.AddHostLocation("compassmod", Path.GetDirectoryName(asset.path) + "/Icons/");

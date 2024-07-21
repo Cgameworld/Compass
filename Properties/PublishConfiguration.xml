@@ -8,11 +8,18 @@
 	<!--Long description of the mod. Single line or multi line. Supports minimal markdown subset-->
 	<!--LongDescription Value="This is a long description" /-->
 	<LongDescription>
-This mod adds a compass to the menubar, this can useful for map creation navigating , making sure direction, real world 
+This mod adds a compass the game and the editor, 
+
+to the men, this can useful for map creation navigating , making sure direction, real world 
 
 Mod has configurable option window 
 
+In game,
 two display modes for the icon: compass needle and caridnal direction text
+
+In the editor,
+it can be found on the bottom toolbar, clicking it will reset direction
+
 	</LongDescription>
 	<!--Thumbnail-->
 	<Thumbnail Value="Properties/Thumbnail.png" />

@@ -19,7 +19,11 @@ const register: ModRegistrar = (moduleRegistry) => {
         return directions[index];
     };
 
-    const CustomMenuButton: React.FC = () => {
+    interface CustomMenuButtonProps {
+        editor?: boolean;
+    }
+
+    const CustomMenuButton: React.FC<CustomMenuButtonProps> = ({ editor = false }) => {
         const [showSettings, setShowSettings] = useState(false);
         const [textDir, setTextDir] = useState(false);
         const RotationNum: number = useValue(Rotation$);
@@ -46,13 +50,16 @@ const register: ModRegistrar = (moduleRegistry) => {
             }
         }, [showSettings, textDir]);
 
+        const toolTipDescription = editor ? "Click to reset to 0\u00b0 N" : Math.round((useValue(Rotation$) + 360) % 360) + "\u00b0 " + getDirection(RotationNum) + " - Click to open options";
+
         return (
-            <DescriptionTooltip title="Compass" description={Math.round((useValue(Rotation$) + 360) % 360) + "\u00b0 " + getDirection(RotationNum) + " - Click to open options"}> 
+            <DescriptionTooltip title="Compass" description={toolTipDescription}> 
                 <button
                     id="MapTextureReplacer-MainGameButton"
                     className="button_ke4 button_h9N"
-                    onClick={toggleSettings}
-                >
+                    onClick={editor ? () => trigger("Compass", "SetToNorth") : toggleSettings}
+                    style={editor ? { width: '100%' } : {}}
+                >f
                     <div className="tinted-icon_iKo icon_be5" style={{
                         backgroundImage: 'url(coui://compassmod/FrameCircle.svg)',
                         backgroundColor: 'rgba(255,255,255,0)',
@@ -164,10 +171,13 @@ const register: ModRegistrar = (moduleRegistry) => {
 
     const MapEditorButton: React.FC = () => {
         useEffect(() => {
-            const weatherContainer = document.getElementsByClassName('sliders_H5X')[0];
+            const weatherContainer = document.getElementsByClassName('aside_uAL')[0];
             if (weatherContainer) {
                 const newDiv = document.createElement('div');
-                ReactDOM.render(<CustomMenuButton/>, newDiv);
+                ReactDOM.render(<div className="field_eKJ" style={{
+                    width: '100%'}}><div className="weather_dXo" style={{
+                    width: '85rem', borderTopRightRadius: 'var(--toolbarFieldInnerRadius)', borderBottomRightRadius: 'var(--toolbarFieldInnerRadius)'
+                    }}><CustomMenuButton editor={true}/></div></div>, newDiv);
                 weatherContainer.appendChild(newDiv);
             }
         }, []);
