@@ -27,6 +27,8 @@ const SliderMod: React.FC<SliderModProps> = ({ min, max, sliderPos, onInputChang
     }, []);
 
     useEffect(() => {
+        const scale = (max - min) / 155.90866;
+        setScale(scale);
         const sliderWidth = (sliderPos - min) / scale;
         if (sliderWidth > max) {
             setSliderWidth(max / scale);
@@ -34,7 +36,7 @@ const SliderMod: React.FC<SliderModProps> = ({ min, max, sliderPos, onInputChang
         else {
             setSliderWidth(sliderWidth);
         }
-        setInputValue(sliderPos); //??
+        setInputValue(sliderPos);
     }, [sliderPos]);
 
     const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
