@@ -93,7 +93,6 @@ const register: ModRegistrar = (moduleRegistry) => {
         };
 
         const handleSliderInputChange = (newValue: number) => {
-            console.log("value changed");
             trigger("Compass", "SetToAngle", newValue);
         };
 
@@ -128,8 +127,8 @@ const register: ModRegistrar = (moduleRegistry) => {
                                             <button
                                                 className="button_WWa button_SH8"
                                                 style={{
-                                                    backgroundColor: textDir ? 'var(--selectedColor)' : 'inherit',
-                                                    color: textDir ? 'white' : 'inherit'
+                                                    backgroundColor: textDir ? 'var(--selectedColor)' : 'var(--menuHoverColorBright)',
+                                                    color: textDir ? 'white' : 'var(--menuText1Normal)'
                                                 }}
                                                 onClick={toggleTextDir}
                                             >
