@@ -98,7 +98,7 @@ const register: ModRegistrar = (moduleRegistry) => {
             setTextDir(!textDir);
             engine.trigger("audio.playSound", "select-item", 1);
         };
-
+        
         const handleSliderInputChange = (newValue: number) => {
             trigger("Compass", "SetToAngle", newValue);
         };
@@ -161,6 +161,21 @@ const register: ModRegistrar = (moduleRegistry) => {
     };
 
     moduleRegistry.append('GameTopRight', CustomMenuButton);
+
+    const MapEditorButton: React.FC = () => {
+        useEffect(() => {
+            const weatherContainer = document.getElementsByClassName('sliders_H5X')[0];
+            if (weatherContainer) {
+                const newDiv = document.createElement('div');
+                ReactDOM.render(<CustomMenuButton/>, newDiv);
+                weatherContainer.appendChild(newDiv);
+            }
+        }, []);
+
+        return null;
+    };
+
+    moduleRegistry.append('Editor', MapEditorButton);
 };
 
 export default register;

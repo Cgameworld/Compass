@@ -8,7 +8,11 @@
 	<!--Long description of the mod. Single line or multi line. Supports minimal markdown subset-->
 	<!--LongDescription Value="This is a long description" /-->
 	<LongDescription>
-This is a long description
+This mod adds a compass to the menubar, this can useful for map creation navigating , making sure direction, real world 
+
+Mod has configurable option window 
+
+two display modes for the icon: compass needle and caridnal direction text
 	</LongDescription>
 	<!--Thumbnail-->
 	<Thumbnail Value="Properties/Thumbnail.png" />
