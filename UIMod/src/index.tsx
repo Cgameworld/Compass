@@ -143,7 +143,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                                             </button>
                                         </div>
                                     </div>
-                                    <SliderMod title={"Bearing"} min={0} max={360} sliderPos={RotationNum} onInputChange={handleSliderInputChange} />                                   
+                                    <SliderMod title={"Heading"} min={0} max={360} sliderPos={RotationNum} onInputChange={handleSliderInputChange} />                                   
                                     <div className="row_S2v" style={{ paddingTop: '10rem', paddingBottom: '10rem' }}>
                                         <button className="button_WWa button_SH8" style={{ justifyContent: 'center' }} onClick={() => {
                                             trigger("Compass", "SetToNorth");
