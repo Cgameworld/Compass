@@ -2,20 +2,21 @@ import engine from 'cohtml/cohtml';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 interface SliderModProps {
+    title: string;
     min: number;
     max: number;
     sliderPos: number;
     onInputChange: (value: number) => void;
 }
 
-const SliderMod: React.FC<SliderModProps> = ({ min, max, sliderPos, onInputChange }) => {
+const SliderMod: React.FC<SliderModProps> = ({ title, min, max, sliderPos, onInputChange }) => {
     const [sliderWidth, setSliderWidth] = useState<number>(0);
     const [inputValue, setInputValue] = useState<number>(sliderPos);
     const sliderRef = useRef<HTMLDivElement>(null);
     const [scale, setScale] = useState<number>(1);
 
     useLayoutEffect(() => {
-        const scale = (max - min) / 155.90866;
+        const scale = (max - min) / 119.36243;
         setScale(scale);
         const sliderWidth = (sliderPos - min) / scale;
         if (sliderWidth > max) {
@@ -27,7 +28,7 @@ const SliderMod: React.FC<SliderModProps> = ({ min, max, sliderPos, onInputChang
     }, []);
 
     useEffect(() => {
-        const scale = (max - min) / 155.90866;
+        const scale = (max - min) / 119.36243;
         setScale(scale);
         const sliderWidth = (sliderPos - min) / scale;
         if (sliderWidth > max) {
@@ -45,7 +46,7 @@ const SliderMod: React.FC<SliderModProps> = ({ min, max, sliderPos, onInputChang
             if (sliderRef.current) {
                 const scale = (max - min) / sliderRef.current.getBoundingClientRect().width;
                 setScale(scale);
-                console.log(sliderRef.current.getBoundingClientRect().width);
+                //console.log(sliderRef.current.getBoundingClientRect().width); //get decimal width
                 const newWidth = Math.min(Math.max(event.clientX - sliderRef.current.getBoundingClientRect().left, 0), sliderRef.current.getBoundingClientRect().width);
                 setSliderWidth(newWidth);
                 const newInputValue = Math.round(min + newWidth * scale);
@@ -75,7 +76,9 @@ const SliderMod: React.FC<SliderModProps> = ({ min, max, sliderPos, onInputChang
     };
 
     return (
-            <div className="row_d2o">
+        <div className="row_d2o">
+            <div className="left_Lgw row_S2v" style={{ fontSize: '18rem', alignItems: 'center' }}>{title}</div>
+            <div className="right_k3O row_S2v" style={{ width: '75%', paddingRight: '5rem' }}>
                 <div className="control_Hds" style={{ width: '67.5%', position: 'relative', left: '20rem' }}>
                     <div className="slider-container_Q_K">
                         <div className="slider_KXG slider_pUS horizontal slider_ROT">
@@ -89,15 +92,17 @@ const SliderMod: React.FC<SliderModProps> = ({ min, max, sliderPos, onInputChang
                             </div>
                         </div>
                     </div>
-                    </div>
-            <input
-                className="slider-input_DXM input_Wfi"
-                type="text"
-                value={inputValue}
-                onChange={handleInputChange}
-                style={{marginLeft: '25rem', width:'15%'}}
+                </div>
+                <input
+                    className="slider-input_DXM input_Wfi"
+                    type="text"
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    style={{ marginLeft: '25rem', width: '20%' }}
                 />
             </div>
+        </div>
+            
     );
 };
 

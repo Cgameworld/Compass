@@ -105,7 +105,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                 right: '0rem',
                 display: 'flex',
                 width: '310rem',
-                height: '400rem'
+                height: '190rem'
             }}>
                 <div className="header_H_U header_Bpo child-opacity-transition_nkS">
                     <div className="title-bar_PF4">
@@ -121,9 +121,8 @@ const register: ModRegistrar = (moduleRegistry) => {
                         <div className="content_gqa">
                             <div className="infoview-panel-section_RXJ">
                                 <div className="content_1xS focusable_GEc item-focused_FuT">
-                                    <SliderMod min={0} max={360} sliderPos={RotationNum} onInputChange={handleSliderInputChange} />
-                                    <div className="row_S2v">
-                                        <div className="left_Lgw row_S2v" style={{fontSize:'18rem', alignItems:'center'}}>Cardinal Direction Mode</div>
+                                    <div className="row_S2v" style={{paddingBottom:'10rem'}}>
+                                        <div className="left_Lgw row_S2v" style={{ fontSize: '18rem', alignItems: 'center' }}>Cardinal Direction Mode</div>
                                         <div className="right_k3O row_S2v">
                                             <button
                                                 className="button_WWa button_SH8"
@@ -136,8 +135,9 @@ const register: ModRegistrar = (moduleRegistry) => {
                                                 {textDir ? 'On' : 'Off'}
                                             </button>
                                         </div>
-                                        </div>
-                                    <div className="row_S2v">
+                                    </div>
+                                    <SliderMod title={"Bearing"} min={0} max={360} sliderPos={RotationNum} onInputChange={handleSliderInputChange} />                                   
+                                    <div className="row_S2v" style={{ paddingTop: '10rem', paddingBottom: '10rem' }}>
                                         <button className="button_WWa button_SH8" style={{justifyContent: 'center'}}  onClick={() => trigger("Compass", "SetRotation")}>Reset to North</button>
                                     </div>
                                     <div className="bottom-padding_JS3"></div>
