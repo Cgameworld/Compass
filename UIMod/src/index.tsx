@@ -50,7 +50,9 @@ const register: ModRegistrar = (moduleRegistry) => {
             }
         }, [showSettings, textDir]);
 
-        const toolTipDescription = editor ? "Click to reset to 0\u00b0 N" : Math.round((useValue(Rotation$) + 360) % 360) + "\u00b0 " + getDirection(RotationNum) + " - Click to open options";
+        const currentOrientation = Math.round((useValue(Rotation$) + 360) % 360) + "\u00b0 " + getDirection(RotationNum);
+        const toolTipDescription = editor ? "Click to reset to 0\u00b0 N" : currentOrientation + " - Click to open options";
+        const [hover, setHover] = useState(false);
 
         return (
             <DescriptionTooltip title="Compass" description={toolTipDescription}> 
@@ -58,15 +60,18 @@ const register: ModRegistrar = (moduleRegistry) => {
                     id="MapTextureReplacer-MainGameButton"
                     className="button_ke4 button_h9N"
                     onClick={editor ? () => trigger("Compass", "SetToNorth") : toggleSettings}
-                    style={editor ? { width: '100%' } : {}}
-                >f
+                    style={editor ? { width: '100%', backgroundColor: hover ? 'rgba(65, 65, 65, 0.35)' : 'transparent' } : {}}
+                    onMouseEnter={() => setHover(true)}
+                    onMouseLeave={() => setHover(false)}
+                >
                     <div className="tinted-icon_iKo icon_be5" style={{
                         backgroundImage: 'url(coui://compassmod/FrameCircle.svg)',
                         backgroundColor: 'rgba(255,255,255,0)',
-                        backgroundSize: '36rem 36rem',
+                        backgroundSize: editor ? '30rem 30rem' : '36rem 36rem',
                         position: 'relative',
-                        width: '36rem',
-                        height: '36rem',
+                        width: editor ? '30rem' : '36rem',
+                        height: editor ? '30rem' : '36rem',
+                        filter : editor ? 'opacity(0.75)': 'opacity(1)',
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center'
@@ -95,6 +100,15 @@ const register: ModRegistrar = (moduleRegistry) => {
                             }} />
                         )}
                     </div>
+                    {editor && (
+                        <div style={{
+                            color: 'rgba(255,255,255,0.8)',
+                            fontSize: 'calc(var(--fontSizeL) - 1rem)',
+                            width: '60rem',
+                            textAlign: 'left',
+                            marginLeft: '5rem'
+                        }}>{currentOrientation}</div>
+                    )}
                 </button>
             </DescriptionTooltip>
         );
@@ -176,7 +190,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                 const newDiv = document.createElement('div');
                 ReactDOM.render(<div className="field_eKJ" style={{
                     width: '100%'}}><div className="weather_dXo" style={{
-                    width: '85rem', borderTopRightRadius: 'var(--toolbarFieldInnerRadius)', borderBottomRightRadius: 'var(--toolbarFieldInnerRadius)'
+                    width: '105rem', borderTopRightRadius: 'var(--toolbarFieldInnerRadius)', borderBottomRightRadius: 'var(--toolbarFieldInnerRadius)'
                     }}><CustomMenuButton editor={true}/></div></div>, newDiv);
                 weatherContainer.appendChild(newDiv);
             }
