@@ -185,14 +185,26 @@ const register: ModRegistrar = (moduleRegistry) => {
 
     const MapEditorButton: React.FC = () => {
         useEffect(() => {
-            const weatherContainer = document.getElementsByClassName('aside_uAL')[0];
+            const weatherContainer = document.getElementsByClassName('infoview-menu_CKL')[0] as HTMLElement;
+            weatherContainer.style.display = 'flex';
+            weatherContainer.style.flexDirection = 'row';
+
             if (weatherContainer) {
                 const newDiv = document.createElement('div');
-                ReactDOM.render(<div className="field_eKJ" style={{
+                /*
+                ReactDOM.render(<div style={{ paddingRight: '10rem' }}><div className="field_eKJ" style={{
                     width: '100%'}}><div className="weather_dXo" style={{
                     width: '105rem', borderTopRightRadius: 'var(--toolbarFieldInnerRadius)', borderBottomRightRadius: 'var(--toolbarFieldInnerRadius)'
-                    }}><CustomMenuButton editor={true}/></div></div>, newDiv);
-                weatherContainer.appendChild(newDiv);
+                    }}><CustomMenuButton editor={true} /></div></div></div>, newDiv);
+                    */
+                ReactDOM.render(
+                    <div className="content_XD5 content_AD7 child-opacity-transition_nkS content_Hzl" style={{ paddingLeft: '10rem', paddingRight: '10rem', marginRight: '10rem'}}>
+                        <div><CustomMenuButton editor={true} /></div>
+                    </div>,
+                    newDiv
+                );
+
+                weatherContainer.insertBefore(newDiv, weatherContainer.firstChild);
             }
         }, []);
 
