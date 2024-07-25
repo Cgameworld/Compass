@@ -35,34 +35,30 @@ const register: ModRegistrar = (moduleRegistry) => {
 
         useEffect(() => {
             if (showSettings) {
-                const tutorialRenderer = document.querySelector('.tutorial-renderer_wve.tutorials-renderer_uj6');
-                if (tutorialRenderer) {
+                const parentElement = editor ? document.querySelector('.main_k4u') : document.querySelector('.tutorial-renderer_wve.tutorials-renderer_uj6');
+                if (parentElement) {
                     const settingsRoot = document.createElement('div');
-                    settingsRoot.id = 'top-right-layout_sSC';
-                    tutorialRenderer.appendChild(settingsRoot);
+                    settingsRoot.id = editor ? '' : 'top-right-layout_sSC';
+                    parentElement.appendChild(settingsRoot);
                     ReactDOM.render(<SettingsWindow onClose={toggleSettings} textDir={textDir} setTextDir={setTextDir} />, settingsRoot);
 
                     return () => {
                         ReactDOM.unmountComponentAtNode(settingsRoot);
-                        tutorialRenderer.removeChild(settingsRoot);
+                        parentElement.removeChild(settingsRoot);
                     };
                 }
             }
         }, [showSettings, textDir]);
 
         const currentOrientation = Math.round((useValue(Rotation$) + 360) % 360) + "\u00b0 " + getDirection(RotationNum);
-        const toolTipDescription = editor ? "Click to reset to 0\u00b0 N" : currentOrientation + " - Click to open options";
-        const [hover, setHover] = useState(false);
+        const toolTipDescription = currentOrientation + " - Click to open options";
 
         return (
             <DescriptionTooltip title="Compass" description={toolTipDescription}> 
                 <button
                     id="MapTextureReplacer-MainGameButton"
-                    className="button_ke4 button_h9N"
-                    onClick={editor ? () => trigger("Compass", "SetToNorth") : toggleSettings}
-                    style={editor ? { width: '100%', backgroundColor: hover ? 'rgba(65, 65, 65, 0.35)' : 'transparent' } : {}}
-                    onMouseEnter={() => setHover(true)}
-                    onMouseLeave={() => setHover(false)}
+                    className={editor ? "button_FBo button_ECf item_It6 item-mouse-states_Fmi item-selected_tAM item-focused_FuT toggle-states_DTm button_FBo button_ECf item_It6 item-mouse-states_Fmi item-selected_tAM item-focused_FuT toggle-states_DTm item_IYJ" : "button_ke4 button_h9N"}
+                    onClick={toggleSettings}
                 >
                     <div className="tinted-icon_iKo icon_be5" style={{
                         backgroundImage: 'url(coui://compassmod/FrameCircle.svg)',
@@ -71,7 +67,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                         position: 'relative',
                         width: editor ? '30rem' : '36rem',
                         height: editor ? '30rem' : '36rem',
-                        filter : editor ? 'opacity(0.75)': 'opacity(1)',
+                        filter : editor ? 'opacity(0.9)': 'opacity(1)',
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center'
@@ -99,16 +95,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                                 transformOrigin: 'center'
                             }} />
                         )}
-                    </div>
-                    {editor && (
-                        <div style={{
-                            color: 'rgba(255,255,255,0.8)',
-                            fontSize: 'calc(var(--fontSizeL) - 1rem)',
-                            width: '60rem',
-                            textAlign: 'left',
-                            marginLeft: '5rem'
-                        }}>{currentOrientation}</div>
-                    )}
+                    </div> 
                 </button>
             </DescriptionTooltip>
         );
@@ -185,26 +172,17 @@ const register: ModRegistrar = (moduleRegistry) => {
 
     const MapEditorButton: React.FC = () => {
         useEffect(() => {
-            const weatherContainer = document.getElementsByClassName('infoview-menu_CKL')[0] as HTMLElement;
-            weatherContainer.style.display = 'flex';
-            weatherContainer.style.flexDirection = 'row';
+            const targetContainer = document.querySelector('.content_XD5.content_AD7.child-opacity-transition_nkS.content_Hzl .row_B8G') as HTMLElement;
 
-            if (weatherContainer) {
+            if (targetContainer) {
                 const newDiv = document.createElement('div');
-                /*
-                ReactDOM.render(<div style={{ paddingRight: '10rem' }}><div className="field_eKJ" style={{
-                    width: '100%'}}><div className="weather_dXo" style={{
-                    width: '105rem', borderTopRightRadius: 'var(--toolbarFieldInnerRadius)', borderBottomRightRadius: 'var(--toolbarFieldInnerRadius)'
-                    }}><CustomMenuButton editor={true} /></div></div></div>, newDiv);
-                    */
                 ReactDOM.render(
-                    <div className="content_XD5 content_AD7 child-opacity-transition_nkS content_Hzl" style={{ paddingLeft: '10rem', paddingRight: '10rem', marginRight: '10rem'}}>
-                        <div><CustomMenuButton editor={true} /></div>
+                    <div style={{ display: 'flex', flexDirection: 'row' }}><CustomMenuButton editor={true} />
                     </div>,
                     newDiv
                 );
 
-                weatherContainer.insertBefore(newDiv, weatherContainer.firstChild);
+                targetContainer.insertBefore(newDiv, targetContainer.firstChild);
             }
         }, []);
 
