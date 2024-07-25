@@ -40,7 +40,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                     const settingsRoot = document.createElement('div');
                     settingsRoot.id = editor ? '' : 'top-right-layout_sSC';
                     parentElement.appendChild(settingsRoot);
-                    ReactDOM.render(<SettingsWindow onClose={toggleSettings} textDir={textDir} setTextDir={setTextDir} />, settingsRoot);
+                    ReactDOM.render(<SettingsWindow onClose={toggleSettings} textDir={textDir} setTextDir={setTextDir} editor={editor} />, settingsRoot);
 
                     return () => {
                         ReactDOM.unmountComponentAtNode(settingsRoot);
@@ -101,7 +101,7 @@ const register: ModRegistrar = (moduleRegistry) => {
         );
     };
 
-    const SettingsWindow: React.FC<{ onClose: () => void, textDir: boolean, setTextDir: (value: boolean) => void }> = ({ onClose, textDir, setTextDir }) => {
+    const SettingsWindow: React.FC<{ onClose: () => void, textDir: boolean, setTextDir: (value: boolean) => void, editor: boolean }> = ({ onClose, textDir, setTextDir, editor }) => {
         const toggleTextDir = () => {
             setTextDir(!textDir);
             engine.trigger("audio.playSound", "select-item", 1);
@@ -116,8 +116,9 @@ const register: ModRegistrar = (moduleRegistry) => {
         return (
             <div className="panel_YqS expanded collapsible advisor-panel_dXi advisor-panel_mrr top-right-panel_A2r" style={{
                 position: 'absolute',
-                top: '50rem',
-                right: '0rem',
+                top: editor ? '120rem' : '50rem',
+                left: editor ? '10rem' : undefined,
+                right: editor ? undefined : '0rem',
                 display: 'flex',
                 width: '310rem',
                 height: '190rem'
