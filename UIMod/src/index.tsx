@@ -79,7 +79,8 @@ const register: ModRegistrar = (moduleRegistry) => {
                                 fontSize: '14rem',
                                 fontWeight: 'bold',
                                 color: 'white',
-                                paddingTop: '1rem'
+                                paddingTop: '1rem',
+                                paddingRight: editor ? '1rem' : undefined
                             }}>
                                 {getDirection(RotationNum)}
                             </div>
