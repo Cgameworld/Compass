@@ -11,6 +11,7 @@ const register: ModRegistrar = (moduleRegistry) => {
     const { DescriptionTooltip } = VanillaComponentsResolver.instance;
 
     const Rotation$ = bindValue<number>('Compass', 'Rotation');
+    const CardinalDirectionMode$ = bindValue<boolean>('Compass', 'CardinalDirectionMode');
 
     const getDirection = (rotation: number): string => {
         const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
@@ -25,7 +26,8 @@ const register: ModRegistrar = (moduleRegistry) => {
 
     const CustomMenuButton: React.FC<CustomMenuButtonProps> = ({ editor = false }) => {
         const [showSettings, setShowSettings] = useState(false);
-        const [textDir, setTextDir] = useState(false);
+        const cardinalDirectionMode: boolean = useValue(CardinalDirectionMode$);
+
         const RotationNum: number = useValue(Rotation$);
 
         const toggleSettings = () => {
@@ -40,7 +42,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                     const settingsRoot = document.createElement('div');
                     settingsRoot.id = editor ? '' : 'top-right-layout_sSC';
                     parentElement.appendChild(settingsRoot);
-                    ReactDOM.render(<SettingsWindow onClose={toggleSettings} textDir={textDir} setTextDir={setTextDir} editor={editor} />, settingsRoot);
+                    ReactDOM.render(<SettingsWindow onClose={toggleSettings} cardinalDirectionMode={cardinalDirectionMode} editor={editor} />, settingsRoot);
 
                     return () => {
                         ReactDOM.unmountComponentAtNode(settingsRoot);
@@ -48,7 +50,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                     };
                 }
             }
-        }, [showSettings, textDir]);
+        }, [showSettings, cardinalDirectionMode]);
 
         const currentOrientation = Math.round((useValue(Rotation$) + 360) % 360) + "\u00b0 " + getDirection(RotationNum);
         const toolTipDescription = currentOrientation + " - Click to open options";
@@ -72,7 +74,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                         justifyContent: 'center',
                         alignItems: 'center'
                     }}>
-                        {textDir ? (
+                        {cardinalDirectionMode ? (
                             <div style={{
                                 fontSize: '14rem',
                                 fontWeight: 'bold',
@@ -101,9 +103,9 @@ const register: ModRegistrar = (moduleRegistry) => {
         );
     };
 
-    const SettingsWindow: React.FC<{ onClose: () => void, textDir: boolean, setTextDir: (value: boolean) => void, editor: boolean }> = ({ onClose, textDir, setTextDir, editor }) => {
+    const SettingsWindow: React.FC<{ onClose: () => void, cardinalDirectionMode: boolean, editor: boolean }> = ({ onClose, cardinalDirectionMode, editor }) => {
         const toggleTextDir = () => {
-            setTextDir(!textDir);
+            trigger("Compass", "SetCardinalDirectionMode",!cardinalDirectionMode);
             engine.trigger("audio.playSound", "select-item", 1);
         };
         
@@ -143,12 +145,12 @@ const register: ModRegistrar = (moduleRegistry) => {
                                             <button
                                                 className="button_WWa button_SH8"
                                                 style={{
-                                                    backgroundColor: textDir ? 'var(--selectedColor)' : 'var(--menuHoverColorBright)',
-                                                    color: textDir ? 'white' : 'var(--menuText1Normal)'
+                                                    backgroundColor: cardinalDirectionMode ? 'var(--selectedColor)' : 'var(--menuHoverColorBright)',
+                                                    color: cardinalDirectionMode ? 'white' : 'var(--menuText1Normal)'
                                                 }}
                                                 onClick={toggleTextDir}
                                             >
-                                                {textDir ? 'On' : 'Off'}
+                                                {cardinalDirectionMode ? 'On' : 'Off'}
                                             </button>
                                         </div>
                                     </div>

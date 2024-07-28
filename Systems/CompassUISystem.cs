@@ -1,4 +1,5 @@
-﻿using Colossal.UI.Binding;
+﻿using Colossal.IO.AssetDatabase;
+using Colossal.UI.Binding;
 using Compass.Helpers;
 using Game.Rendering;
 using Game.UI;
@@ -13,6 +14,7 @@ namespace Compass
         private float rotation;
 
         private GetterValueBinding<float> rotationBinding;
+        public GetterValueBinding<bool> cardinalDirectionBinding;
 
         protected override void OnCreate()
         {
@@ -24,6 +26,11 @@ namespace Compass
             this.AddBinding(new TriggerBinding("Compass", "SetToNorth", this.SetToNorth));
 
             this.AddBinding(new TriggerBinding<float>("Compass", "SetToAngle", (angle) => this.SetToAngle(angle)));
+
+            this.cardinalDirectionBinding = new GetterValueBinding<bool>("Compass", "CardinalDirectionMode", () => Mod.CompassModSettings.CardinalDirectionMode);
+            AddBinding(this.cardinalDirectionBinding);
+
+            this.AddBinding(new TriggerBinding<bool>("Compass", "SetCardinalDirectionMode", (enabled) => SetCardinalDirectionMode(enabled)));
         }
 
         private void SetToAngle(float angle)
@@ -43,6 +50,13 @@ namespace Compass
             }
         }
 
+        private void SetCardinalDirectionMode(bool enabled)
+        {
+            Mod.log.Info("SetCardinalDirectionMode: " +  enabled);
+            Mod.CompassModSettings.CardinalDirectionMode = enabled;
+            cardinalDirectionBinding.Update();
+            AssetDatabase.global.SaveSettingsNow();
+        }
         private IEnumerator SmoothRotation()
         {
             var cameraUpdateSystem = World.GetExistingSystemManaged<CameraUpdateSystem>();

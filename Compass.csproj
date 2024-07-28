@@ -17,6 +17,9 @@
 		<Reference Include="Cinemachine">
 			<Private>false</Private>
 		</Reference>
+		<Reference Include="Colossal.Localization">
+		  <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Cities Skylines II\Cities2_Data\Managed\Colossal.Localization.dll</HintPath>
+		</Reference>
 		<Reference Include="Colossal.UI">
 			<Private>false</Private>
 		</Reference>
