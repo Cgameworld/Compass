@@ -1,8 +1,8 @@
-Download Here: [https://mods.paradoxplaza.com/mods/86260/Windows](https://mods.paradoxplaza.com/mods/86260/Windows)
-
 ![Preview](https://raw.githubusercontent.com/Cgameworld/Compass/master/Properties/Gallery1.jpg)
 
 Compass is a mod for Cities: Skylines 2 that adds a new dynamic icon to the game allowing you to always see which direction your camera is relative to North.
+
+Download Here: [https://mods.paradoxplaza.com/mods/86260/Windows](https://mods.paradoxplaza.com/mods/86260/Windows)
 
 # Settings
 
