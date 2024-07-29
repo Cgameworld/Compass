@@ -8,25 +8,29 @@
 	<!--Long description of the mod. Single line or multi line. Supports minimal markdown subset-->
 	<!--LongDescription Value="This is a long description" /-->
 	<LongDescription>
-This mod adds a compass the game and the editor, 
+Compass adds a new dynamic icon to the game allowing you to always see which direction your camera is relative to North.
 
-to the men, this can useful for map creation navigating , making sure direction, real world 
+# Settings
 
-Mod has configurable option window 
+The mod has two display modes. The first, Compass Wheel Mode shows a compact compass wheel icon. The second, Cardinal Direction Mode displays the cardinal direction (such as N, NW, E, etc).
 
-In game,
-two display modes for the icon: compass needle and caridnal direction text
+In the settings window, the heading can be precisely changed, and a Reset To North button is included.
 
-In the editor,
-it can be found on the bottom toolbar, clicking it will reset direction
+# Notes
 
+This mod works in game and in the editor. In game, the icon is added to the top left corner near the settings icon, while in the editor it is added to the top right corner next to the natural resource panel shortcut.
+
+# Conclusion
+
+If you like this mod be sure to leave an upvote! Thanks
 	</LongDescription>
 	<!--Thumbnail-->
 	<Thumbnail Value="Properties/Thumbnail.png" />
 	<!--Screenshot, can be set multiple times-->
-	<Screenshot Value="" />
+  <Screenshot Value="Properties/Gallery1.jpg" />
+  <Screenshot Value="Properties/Gallery2.jpg" />
 	<!--Tag, can be set multiple times-->
-	<Tag Value="" />
+	<Tag Value="Code Mod" />
 	<!--Link to the forum post where the mod can be discussed-->
 	<ForumLink Value="" />
 	<!--Version of the mod-->
@@ -38,7 +42,7 @@ it can be found on the bottom toolbar, clicking it will reset direction
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
 	<ChangeLog Value="" />
 	<!--ChangeLog>
-	</ChangeLog-->
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon, buymeacoffee, kofi, crowdin, gitlab-->
-	<ExternalLink Type="" Url="" />
+  <ExternalLink Type="discord" Url="https://discord.gg/tDZhaMrgsQ" />
+  <ExternalLink Type="github" Url="https://github.com/Cgameworld/Compass" />
 </Publish>
