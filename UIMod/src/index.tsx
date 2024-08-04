@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { ModRegistrar } from "cs2/modding";
 import { bindValue, trigger, useValue } from "cs2/api";
 import ReactDOM from 'react-dom';
-import SliderMod from './slider_modified';
+import SliderMod from './components/slider_modified'
+import ButtonMod from './components/button_modified';
 import engine from 'cohtml/cohtml';
 import { VanillaComponentsResolver } from '../types/internal';
+
 
 const register: ModRegistrar = (moduleRegistry) => {
 
@@ -105,10 +107,6 @@ const register: ModRegistrar = (moduleRegistry) => {
     };
 
     const SettingsWindow: React.FC<{ onClose: () => void, cardinalDirectionMode: boolean, editor: boolean }> = ({ onClose, cardinalDirectionMode, editor }) => {
-        const toggleTextDir = () => {
-            trigger("Compass", "SetCardinalDirectionMode",!cardinalDirectionMode);
-            engine.trigger("audio.playSound", "select-item", 1);
-        };
         
         const handleSliderInputChange = (newValue: number) => {
             trigger("Compass", "SetToAngle", newValue);
@@ -143,34 +141,13 @@ const register: ModRegistrar = (moduleRegistry) => {
                                     <div className="row_S2v" style={{paddingBottom:'10rem'}}>
                                         <div className="left_Lgw row_S2v" style={{ fontSize: '18rem', alignItems: 'center' }}>Cardinal Direction Mode</div>
                                         <div className="right_k3O row_S2v">
-                                            <button
-                                                className="button_WWa button_SH8"
-                                                style={{
-                                                    backgroundColor: cardinalDirectionMode ? 'var(--selectedColor)' : 'var(--menuHoverColorBright)',
-                                                    color: cardinalDirectionMode ? 'white' : 'var(--menuText1Normal)'                                     
-                                                }}
-                                                onClick={toggleTextDir}
-                                            >
-                                                {cardinalDirectionMode ? 'On' : 'Off'}
-                                            </button>
+                                            <ButtonMod active={cardinalDirectionMode} inactiveText={"Off"} text={"On"} onClick={() => trigger("Compass", "SetCardinalDirectionMode", !cardinalDirectionMode)}/>
                                         </div>
                                     </div>
                                     <div className="row_S2v" style={{ paddingBottom: '10rem' }}>
                                         <div className="left_Lgw row_S2v" style={{ fontSize: '18rem', alignItems: 'center' }}>Relative North</div>
                                         <div className="right_k3O row_S2v">
-                                            <button
-                                                className="button_WWa button_SH8"
-                                                style={{
-                                                    backgroundColor: cardinalDirectionMode ? 'var(--selectedColor)' : 'var(--menuHoverColorBright)',
-                                                    color: cardinalDirectionMode ? 'white' : 'var(--menuText1Normal)'  
-                                                }}
-                                                onClick={() => {
-                                                    //trigger("Compass", "SetToNorth");
-                                                    engine.trigger("audio.playSound", "select-item", 1);
-                                                }}
-                                            >
-                                                {cardinalDirectionMode ? '+139\u00b0' : 'Set'}
-                                            </button>
+                                            <ButtonMod active={cardinalDirectionMode} inactiveText={"Set"} text={"+139\u00b0"} onClick={() => trigger("Compass", "SetToNorth")} /> 
                                             <button className="button_WWa button_SH8" style={{ justifyContent: 'center',
                                             paddingLeft: '20rem',
                                             paddingRight: '20rem'    
