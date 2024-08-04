@@ -113,7 +113,13 @@ const register: ModRegistrar = (moduleRegistry) => {
     const SettingsWindow: React.FC<{ onClose: () => void, cardinalDirectionMode: boolean, editor: boolean }> = ({ onClose, cardinalDirectionMode, editor }) => {
         
         const handleSliderInputChange = (newValue: number) => {
-            trigger("Compass", "SetToAngle", newValue);
+            console.table({
+                newValue: newValue,
+                RotationNum: RotationNum,
+                RelativeNorthOffset: RelativeNorthOffset,
+                TriggerSend: newValue + RelativeNorthOffset,
+            });
+            trigger("Compass", "SetToAngle", newValue + RelativeNorthOffset);
         };
 
         const RotationNum: number = Math.round((useValue(Rotation$) + 360) % 360);
@@ -168,7 +174,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                                             }}>Reset</button>
                                         </div>
                                     </div>
-                                    <SliderMod title={"Heading"} min={0} max={360} sliderPos={RotationNum} onInputChange={handleSliderInputChange} />                                   
+                                    <SliderMod title={"Heading"} min={0} max={359} sliderPos={(RotationNum - RelativeNorthOffset + 360) % 360} onInputChange={handleSliderInputChange} />                                   
                                     <div className="row_S2v" style={{ paddingTop: '10rem', paddingBottom: '10rem' }}>
                                         <button className="button_WWa button_SH8" style={{ justifyContent: 'center' }} onClick={() => {
                                             trigger("Compass", "SetToNorth");
