@@ -123,8 +123,8 @@ const register: ModRegistrar = (moduleRegistry) => {
                 left: editor ? '10rem' : undefined,
                 right: editor ? undefined : '0rem',
                 display: 'flex',
-                width: '310rem',
-                height: '190rem'
+                width: '340rem',
+                height: '245rem'
             }}>
                 <div className="header_H_U header_Bpo child-opacity-transition_nkS">
                     <div className="title-bar_PF4">
@@ -147,12 +147,37 @@ const register: ModRegistrar = (moduleRegistry) => {
                                                 className="button_WWa button_SH8"
                                                 style={{
                                                     backgroundColor: cardinalDirectionMode ? 'var(--selectedColor)' : 'var(--menuHoverColorBright)',
-                                                    color: cardinalDirectionMode ? 'white' : 'var(--menuText1Normal)'
+                                                    color: cardinalDirectionMode ? 'white' : 'var(--menuText1Normal)'                                     
                                                 }}
                                                 onClick={toggleTextDir}
                                             >
                                                 {cardinalDirectionMode ? 'On' : 'Off'}
                                             </button>
+                                        </div>
+                                    </div>
+                                    <div className="row_S2v" style={{ paddingBottom: '10rem' }}>
+                                        <div className="left_Lgw row_S2v" style={{ fontSize: '18rem', alignItems: 'center' }}>Relative North</div>
+                                        <div className="right_k3O row_S2v">
+                                            <button
+                                                className="button_WWa button_SH8"
+                                                style={{
+                                                    backgroundColor: cardinalDirectionMode ? 'var(--selectedColor)' : 'var(--menuHoverColorBright)',
+                                                    color: cardinalDirectionMode ? 'white' : 'var(--menuText1Normal)'  
+                                                }}
+                                                onClick={() => {
+                                                    //trigger("Compass", "SetToNorth");
+                                                    engine.trigger("audio.playSound", "select-item", 1);
+                                                }}
+                                            >
+                                                {cardinalDirectionMode ? '+139\u00b0' : 'Set'}
+                                            </button>
+                                            <button className="button_WWa button_SH8" style={{ justifyContent: 'center',
+                                            paddingLeft: '20rem',
+                                            paddingRight: '20rem'    
+                                            }}                                                onClick={() => {
+                                                //trigger("Compass", "SetToNorth");
+                                                engine.trigger("audio.playSound", "select-item", 1);
+                                            }}>Reset</button>
                                         </div>
                                     </div>
                                     <SliderMod title={"Heading"} min={0} max={360} sliderPos={RotationNum} onInputChange={handleSliderInputChange} />                                   

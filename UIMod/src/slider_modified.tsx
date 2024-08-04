@@ -16,7 +16,7 @@ const SliderMod: React.FC<SliderModProps> = ({ title, min, max, sliderPos, onInp
     const [scale, setScale] = useState<number>(1);
 
     useLayoutEffect(() => {
-        const scale = (max - min) / 119.36243;
+        const scale = (max - min) / 134.54993;
         setScale(scale);
         const sliderWidth = (sliderPos - min) / scale;
         if (sliderWidth > max) {
@@ -28,7 +28,7 @@ const SliderMod: React.FC<SliderModProps> = ({ title, min, max, sliderPos, onInp
     }, []);
 
     useEffect(() => {
-        const scale = (max - min) / 119.36243;
+        const scale = (max - min) / 134.549923;
         setScale(scale);
         const sliderWidth = (sliderPos - min) / scale;
         if (sliderWidth > max) {
@@ -79,7 +79,7 @@ const SliderMod: React.FC<SliderModProps> = ({ title, min, max, sliderPos, onInp
     };
 
     return (
-        <div className="row_d2o">
+        <div className="row_d2o" style={{ paddingTop: '5rem' }}>
             <div className="left_Lgw row_S2v" style={{ fontSize: '18rem', alignItems: 'center' }}>{title}</div>
             <div className="right_k3O row_S2v" style={{ width: '75%', paddingRight: '5rem' }}>
                 <div className="control_Hds" style={{ width: '67.5%', position: 'relative', left: '20rem' }}>
