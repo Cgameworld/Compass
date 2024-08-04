@@ -119,8 +119,6 @@ const register: ModRegistrar = (moduleRegistry) => {
         const RotationNum: number = Math.round((useValue(Rotation$) + 360) % 360);
         const RelativeNorthOffset: number = Math.round(useValue(RelativeNorthOffset$));
 
-        const AdjustedRotation = RotationNum - RelativeNorthOffset;
-
         return (
             <div className="panel_YqS expanded collapsible advisor-panel_dXi advisor-panel_mrr top-right-panel_A2r" style={{
                 position: 'absolute',
@@ -154,7 +152,13 @@ const register: ModRegistrar = (moduleRegistry) => {
                                     <div className="row_S2v" style={{ paddingBottom: '10rem' }}>
                                         <div className="left_Lgw row_S2v" style={{ fontSize: '18rem', alignItems: 'center' }}>Relative North</div>
                                         <div className="right_k3O row_S2v">
-                                            <ButtonMod active={RelativeNorthOffset !== 0} inactiveText={"Set"} text={"+" + RelativeNorthOffset + "\u00b0"} onClick={() => trigger("Compass", "SetRelativeNorthOffset", RotationNum)} /> 
+                                            <ButtonMod active={RelativeNorthOffset !== 0} inactiveText={"Set"} text={(RelativeNorthOffset > 0 ? "+" : "") + RelativeNorthOffset + "\u00b0"} onClick={() => {
+                                                let adjustedRotationNum = RotationNum;
+                                                if (RotationNum > 180) {
+                                                    adjustedRotationNum = RotationNum - 360;
+                                                }
+                                                trigger("Compass", "SetRelativeNorthOffset", adjustedRotationNum);
+                                            }} /> 
                                             <button className="button_WWa button_SH8" style={{ justifyContent: 'center',
                                             paddingLeft: '20rem',
                                             paddingRight: '20rem'    
