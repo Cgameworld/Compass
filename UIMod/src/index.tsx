@@ -14,6 +14,7 @@ const register: ModRegistrar = (moduleRegistry) => {
 
     const Rotation$ = bindValue<number>('Compass', 'Rotation');
     const CardinalDirectionMode$ = bindValue<boolean>('Compass', 'CardinalDirectionMode');
+    const RelativeNorthOffset$ = bindValue<number>('Compass', 'RelativeNorthOffset');
 
     const getDirection = (rotation: number): string => {
         const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
@@ -31,6 +32,9 @@ const register: ModRegistrar = (moduleRegistry) => {
         const cardinalDirectionMode: boolean = useValue(CardinalDirectionMode$);
 
         const RotationNum: number = useValue(Rotation$);
+        const RelativeNorthOffset: number = Math.round(useValue(RelativeNorthOffset$));
+
+        const AdjustedRotation = RotationNum - RelativeNorthOffset;
 
         const toggleSettings = () => {
             setShowSettings(!showSettings);
@@ -54,7 +58,7 @@ const register: ModRegistrar = (moduleRegistry) => {
             }
         }, [showSettings, cardinalDirectionMode]);
 
-        const currentOrientation = Math.round((useValue(Rotation$) + 360) % 360) + "\u00b0 " + getDirection(RotationNum);
+        const currentOrientation = Math.round((useValue(Rotation$) + 360) % 360) + "\u00b0 " + getDirection(AdjustedRotation);
         const toolTipDescription = currentOrientation + " - Click to open options";
 
         return (
@@ -84,7 +88,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                                 paddingTop: '1rem',
                                 paddingRight: editor ? '1rem' : undefined
                             }}>
-                                {getDirection(RotationNum)}
+                                {getDirection(AdjustedRotation)}
                             </div>
                         ) : (
                             <div className="tinted-icon_iKo icon_be5" style={{
@@ -96,7 +100,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                                 backgroundImage: 'url(coui://compassmod/CompassNeedle.svg)',
                                 backgroundColor: 'rgba(255,255,255,0)',
                                 backgroundSize: '100% 100%',
-                                transform: `rotate(${RotationNum}deg)`,
+                                transform: `rotate(${AdjustedRotation}deg)`,
                                 transformOrigin: 'center'
                             }} />
                         )}
@@ -113,6 +117,9 @@ const register: ModRegistrar = (moduleRegistry) => {
         };
 
         const RotationNum: number = Math.round((useValue(Rotation$) + 360) % 360);
+        const RelativeNorthOffset: number = Math.round(useValue(RelativeNorthOffset$));
+
+        const AdjustedRotation = RotationNum - RelativeNorthOffset;
 
         return (
             <div className="panel_YqS expanded collapsible advisor-panel_dXi advisor-panel_mrr top-right-panel_A2r" style={{
@@ -147,12 +154,12 @@ const register: ModRegistrar = (moduleRegistry) => {
                                     <div className="row_S2v" style={{ paddingBottom: '10rem' }}>
                                         <div className="left_Lgw row_S2v" style={{ fontSize: '18rem', alignItems: 'center' }}>Relative North</div>
                                         <div className="right_k3O row_S2v">
-                                            <ButtonMod active={cardinalDirectionMode} inactiveText={"Set"} text={"+139\u00b0"} onClick={() => trigger("Compass", "SetToNorth")} /> 
+                                            <ButtonMod active={RelativeNorthOffset !== 0} inactiveText={"Set"} text={"+" + RelativeNorthOffset + "\u00b0"} onClick={() => trigger("Compass", "SetRelativeNorthOffset", RotationNum)} /> 
                                             <button className="button_WWa button_SH8" style={{ justifyContent: 'center',
                                             paddingLeft: '20rem',
                                             paddingRight: '20rem'    
                                             }}                                                onClick={() => {
-                                                //trigger("Compass", "SetToNorth");
+                                                trigger("Compass", "SetRelativeNorthOffset", 0)
                                                 engine.trigger("audio.playSound", "select-item", 1);
                                             }}>Reset</button>
                                         </div>
@@ -162,7 +169,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                                         <button className="button_WWa button_SH8" style={{ justifyContent: 'center' }} onClick={() => {
                                             trigger("Compass", "SetToNorth");
                                             engine.trigger("audio.playSound", "select-item", 1);
-                                        }}>Reset to North</button>
+                                        }}>{RelativeNorthOffset !== 0 ? "Reset to Relative North" : "Reset to North"}</button>
                                     </div>
                                     <div className="bottom-padding_JS3"></div>
                                 </div>

@@ -4,6 +4,7 @@ using Compass.Helpers;
 using Game.Rendering;
 using Game.UI;
 using Game.UI.InGame;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace Compass
 
         private GetterValueBinding<float> rotationBinding;
         public GetterValueBinding<bool> cardinalDirectionBinding;
+        private GetterValueBinding<float> relativeNorthOffsetBinding;
 
         protected override void OnCreate()
         {
@@ -31,6 +33,11 @@ namespace Compass
             AddBinding(this.cardinalDirectionBinding);
 
             this.AddBinding(new TriggerBinding<bool>("Compass", "SetCardinalDirectionMode", (enabled) => SetCardinalDirectionMode(enabled)));
+
+            this.relativeNorthOffsetBinding = new GetterValueBinding<float>("Compass", "RelativeNorthOffset", () => Mod.CompassModSettings.RelativeNorthOffset);
+            AddBinding(this.relativeNorthOffsetBinding);
+
+            this.AddBinding(new TriggerBinding<float>("Compass", "SetRelativeNorthOffset", (num) => this.RelativeNorthOffset(num)));
         }
 
         private void SetToAngle(float angle)
@@ -46,7 +53,7 @@ namespace Compass
         {
             if (Camera.main != null)
             {
-                StaticCoroutine.Start(SmoothRotation());
+                StaticCoroutine.Start(SmoothRotation(Mod.CompassModSettings.RelativeNorthOffset));
             }
         }
 
@@ -57,11 +64,18 @@ namespace Compass
             cardinalDirectionBinding.Update();
             AssetDatabase.global.SaveSettingsNow();
         }
-        private IEnumerator SmoothRotation()
+
+        private void RelativeNorthOffset(float num)
+        {
+            Mod.CompassModSettings.RelativeNorthOffset = num;
+            relativeNorthOffsetBinding.Update();
+            AssetDatabase.global.SaveSettingsNow();
+        }
+        private IEnumerator SmoothRotation(float angle)
         {
             var cameraUpdateSystem = World.GetExistingSystemManaged<CameraUpdateSystem>();
             var existingRotation = cameraUpdateSystem.activeCameraController.rotation;
-            var targetRotation = new Vector3(existingRotation.x, 0f, existingRotation.z);
+            var targetRotation = new Vector3(existingRotation.x, angle, existingRotation.z);
             var smoothTime = 0.3f; 
 
             float elapsedTime = 0;

@@ -37,12 +37,16 @@ namespace Compass
         public bool CardinalDirectionMode { get; set; }
 
         [SettingsUIHidden]
+        public float RelativeNorthOffset { get; set; }
+
+        [SettingsUIHidden]
         public int MakeSureSave { get; set; }
 
         public override void SetDefaults()
         {
             MakeSureSave = new System.Random().Next();
             CardinalDirectionMode = false;
+            RelativeNorthOffset = 0; 
         }
 
         public void Unload()
