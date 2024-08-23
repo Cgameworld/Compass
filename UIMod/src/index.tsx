@@ -115,6 +115,10 @@ const register: ModRegistrar = (moduleRegistry) => {
         };
 
         const RotationNum: number = Math.round((useValue(Rotation$) + 360) % 360);
+        const isNorth: boolean = RotationNum === 0 || RotationNum === 360;
+        const isEast: boolean = RotationNum === 90;
+        const isSouth: boolean = RotationNum === 180;
+        const isWest: boolean = RotationNum === 270;
 
         return (
             <div className="panel_YqS expanded collapsible advisor-panel_dXi advisor-panel_mrr top-right-panel_A2r" style={{
@@ -159,28 +163,44 @@ const register: ModRegistrar = (moduleRegistry) => {
                                     <div className="row_S2v" style={{ paddingTop: '10rem', paddingBottom: '10rem' }}>
                                         <button
                                             className="button_WWa button_SH8"
-                                            style={{ justifyContent: 'center' }}
+                                            style={{
+                                                justifyContent: 'center',
+                                                backgroundColor: isNorth ? 'var(--selectedColor)' : 'var(--menuHoverColorBright)',
+                                                color: isNorth ? 'white' : 'var(--menuText1Normal)'
+                                            }}
                                             onClick={() => {
                                                 trigger("Compass", "SetToNorth");
                                                 engine.trigger("audio.playSound", "select-item", 1);
                                             }}>N</button>
                                         <button
                                             className="button_WWa button_SH8"
-                                            style={{ justifyContent: 'center' }}
+                                            style={{
+                                                justifyContent: 'center',
+                                                backgroundColor: isEast ? 'var(--selectedColor)' : 'var(--menuHoverColorBright)',
+                                                color: isEast ? 'white' : 'var(--menuText1Normal)'
+                                            }}
                                             onClick={() => {
                                                 trigger("Compass", "SetToEast");
                                                 engine.trigger("audio.playSound", "select-item", 1);
                                             }}>E</button>
                                         <button
                                             className="button_WWa button_SH8"
-                                            style={{ justifyContent: 'center' }}
+                                            style={{
+                                                justifyContent: 'center',
+                                                backgroundColor: isSouth ? 'var(--selectedColor)' : 'var(--menuHoverColorBright)',
+                                                color: isSouth ? 'white' : 'var(--menuText1Normal)'
+                                            }}
                                             onClick={() => {
                                                 trigger("Compass", "SetToSouth");
                                                 engine.trigger("audio.playSound", "select-item", 1);
                                             }}>S</button>
                                         <button
                                             className="button_WWa button_SH8"
-                                            style={{ justifyContent: 'center' }}
+                                            style={{
+                                                justifyContent: 'center',
+                                                backgroundColor: isWest ? 'var(--selectedColor)' : 'var(--menuHoverColorBright)',
+                                                color: isWest ? 'white' : 'var(--menuText1Normal)'
+                                            }}
                                             onClick={() => {
                                                 trigger("Compass", "SetToWest");
                                                 engine.trigger("audio.playSound", "select-item", 1);
