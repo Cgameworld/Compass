@@ -1,4 +1,4 @@
-﻿using Compass;
+using Compass;
 using System;
 using System.Collections;
 using System.Collections.Generic;

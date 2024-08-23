@@ -1,4 +1,4 @@
-﻿using Colossal;
+using Colossal;
 using Colossal.IO.AssetDatabase;
 using Compass;
 using Game.Modding;

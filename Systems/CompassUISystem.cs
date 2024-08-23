@@ -1,4 +1,4 @@
-﻿using Colossal.IO.AssetDatabase;
+using Colossal.IO.AssetDatabase;
 using Colossal.UI.Binding;
 using Compass.Helpers;
 using Game.Rendering;
