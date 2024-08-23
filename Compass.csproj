@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>Library</OutputType>
@@ -82,6 +82,7 @@
     </ItemGroup>
 
     <Target Name="BuildUI" AfterTargets="AfterBuild">
+        <Exec Command="npm install" WorkingDirectory="$(ProjectDir)/UIMod" />
         <Exec Command="npm run build" WorkingDirectory="$(ProjectDir)/UIMod" />
     </Target>
 
