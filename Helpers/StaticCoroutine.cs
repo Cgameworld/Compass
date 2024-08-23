@@ -31,7 +31,7 @@ namespace Compass.Helpers {
 
             if (m_instance != null) { return m_instance; }
 
-            Mod.log.Info("Build did not generate a replacement instance. Method Failed!");
+            Mod.Log.Info("Build did not generate a replacement instance. Method Failed!");
 
             return null;
         }

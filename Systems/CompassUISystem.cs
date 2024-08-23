@@ -48,7 +48,7 @@ namespace Compass {
         }
 
         private void SetCardinalDirectionMode(bool enabled) {
-            Mod.log.Info("SetCardinalDirectionMode: " + enabled);
+            //Mod.Log.Info("SetCardinalDirectionMode: " + enabled);
             Mod.CompassModSettings.CardinalDirectionMode = enabled;
             this.cardinalDirectionBinding.Update();
             AssetDatabase.global.SaveSettingsNow();

@@ -10,14 +10,14 @@ using Game.SceneFlow;
 
 namespace Compass {
     public class Mod : IMod {
-        public static ILog log = LogManager.GetLogger($"{nameof(Compass)}.{nameof(Mod)}").SetShowsErrorsInUI(false);
+        public static ILog Log { get; } = LogManager.GetLogger($"{nameof(Compass)}.{nameof(Mod)}").SetShowsErrorsInUI(false);
         public static Setting CompassModSettings;
 
         public void OnLoad(UpdateSystem updateSystem) {
-            log.Info(nameof(OnLoad));
+            //Mod.Log.Info(nameof(OnLoad));
 
             if (GameManager.instance.modManager.TryGetExecutableAsset(this, out ExecutableAsset asset)) {
-                log.Info("Mod Directory:" + Path.GetDirectoryName(asset.path));
+                //Mod.Log.Info("Mod Directory:" + Path.GetDirectoryName(asset.path));
             }
 
             updateSystem.UpdateBefore<CompassUISystem>(SystemUpdatePhase.UIUpdate);
@@ -34,7 +34,7 @@ namespace Compass {
         }
 
         public void OnDispose() {
-            log.Info(nameof(OnDispose));
+            //Mod.Log.Info(nameof(OnDispose));
         }
     }
 }
