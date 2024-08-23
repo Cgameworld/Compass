@@ -56,7 +56,7 @@ const register: ModRegistrar = (moduleRegistry) => {
         const toolTipDescription = currentOrientation + " - Click to open options";
 
         return (
-            <DescriptionTooltip title="Compass" description={toolTipDescription}> 
+            <DescriptionTooltip title="Compass" description={toolTipDescription}>
                 <button
                     id="MapTextureReplacer-MainGameButton"
                     className={editor ? "button_FBo button_ECf item_It6 item-mouse-states_Fmi item-selected_tAM item-focused_FuT toggle-states_DTm button_FBo button_ECf item_It6 item-mouse-states_Fmi item-selected_tAM item-focused_FuT toggle-states_DTm item_IYJ" : "button_ke4 button_h9N"}
@@ -98,7 +98,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                                 transformOrigin: 'center'
                             }} />
                         )}
-                    </div> 
+                    </div>
                 </button>
             </DescriptionTooltip>
         );
@@ -109,7 +109,7 @@ const register: ModRegistrar = (moduleRegistry) => {
             trigger("Compass", "SetCardinalDirectionMode", !cardinalDirectionMode);
             engine.trigger("audio.playSound", "select-item", 1);
         };
-        
+
         const handleSliderInputChange = (newValue: number) => {
             trigger("Compass", "SetToAngle", newValue);
         };
@@ -155,12 +155,36 @@ const register: ModRegistrar = (moduleRegistry) => {
                                             </button>
                                         </div>
                                     </div>
-                                    <SliderMod title={"Heading"} min={0} max={360} sliderPos={RotationNum} onInputChange={handleSliderInputChange} />                                   
+                                    <SliderMod title={"Heading"} min={0} max={360} sliderPos={RotationNum} onInputChange={handleSliderInputChange} />
                                     <div className="row_S2v" style={{ paddingTop: '10rem', paddingBottom: '10rem' }}>
-                                        <button className="button_WWa button_SH8" style={{ justifyContent: 'center' }} onClick={() => {
-                                            trigger("Compass", "SetToNorth");
-                                            engine.trigger("audio.playSound", "select-item", 1);
-                                        }}>Reset to North</button>
+                                        <button
+                                            className="button_WWa button_SH8"
+                                            style={{ justifyContent: 'center' }}
+                                            onClick={() => {
+                                                trigger("Compass", "SetToNorth");
+                                                engine.trigger("audio.playSound", "select-item", 1);
+                                            }}>N</button>
+                                        <button
+                                            className="button_WWa button_SH8"
+                                            style={{ justifyContent: 'center' }}
+                                            onClick={() => {
+                                                trigger("Compass", "SetToEast");
+                                                engine.trigger("audio.playSound", "select-item", 1);
+                                            }}>E</button>
+                                        <button
+                                            className="button_WWa button_SH8"
+                                            style={{ justifyContent: 'center' }}
+                                            onClick={() => {
+                                                trigger("Compass", "SetToSouth");
+                                                engine.trigger("audio.playSound", "select-item", 1);
+                                            }}>S</button>
+                                        <button
+                                            className="button_WWa button_SH8"
+                                            style={{ justifyContent: 'center' }}
+                                            onClick={() => {
+                                                trigger("Compass", "SetToWest");
+                                                engine.trigger("audio.playSound", "select-item", 1);
+                                            }}>W</button>
                                     </div>
                                     <div className="bottom-padding_JS3"></div>
                                 </div>

@@ -23,14 +23,17 @@ namespace Compass {
             this.rotationBinding = new GetterValueBinding<float>("Compass", "Rotation", () => this.rotation);
             this.AddBinding(this.rotationBinding);
 
-            this.AddBinding(new TriggerBinding("Compass", "SetToNorth", this.SetToNorth));
+            this.AddBinding(new TriggerBinding("Compass", nameof(this.SetToNorth), this.SetToNorth));
+            this.AddBinding(new TriggerBinding("Compass", nameof(this.SetToEast), this.SetToEast));
+            this.AddBinding(new TriggerBinding("Compass", nameof(this.SetToSouth), this.SetToSouth));
+            this.AddBinding(new TriggerBinding("Compass", nameof(this.SetToWest), this.SetToWest));
 
-            this.AddBinding(new TriggerBinding<float>("Compass", "SetToAngle", (angle) => this.SetToAngle(angle)));
+            this.AddBinding(new TriggerBinding<float>("Compass", nameof(this.SetToAngle), (angle) => this.SetToAngle(angle)));
 
-            this.cardinalDirectionBinding = new GetterValueBinding<bool>("Compass", "CardinalDirectionMode", () => Mod.CompassModSettings.CardinalDirectionMode);
+            this.cardinalDirectionBinding = new GetterValueBinding<bool>("Compass", nameof(Mod.CompassModSettings.CardinalDirectionMode), () => Mod.CompassModSettings.CardinalDirectionMode);
             this.AddBinding(this.cardinalDirectionBinding);
 
-            this.AddBinding(new TriggerBinding<bool>("Compass", "SetCardinalDirectionMode", (enabled) => this.SetCardinalDirectionMode(enabled)));
+            this.AddBinding(new TriggerBinding<bool>("Compass", nameof(this.SetCardinalDirectionMode), (enabled) => this.SetCardinalDirectionMode(enabled)));
         }
 
         private void SetToAngle(float angle) {
@@ -43,7 +46,22 @@ namespace Compass {
 
         private void SetToNorth() {
             if (Camera.main != null) {
-                StaticCoroutine.Start(this.SmoothRotation());
+                StaticCoroutine.Start(this.SmoothRotation(0f));
+            }
+        }
+        private void SetToEast() {
+            if (Camera.main != null) {
+                StaticCoroutine.Start(this.SmoothRotation(90f));
+            }
+        }
+        private void SetToSouth() {
+            if (Camera.main != null) {
+                StaticCoroutine.Start(this.SmoothRotation(180f));
+            }
+        }
+        private void SetToWest() {
+            if (Camera.main != null) {
+                StaticCoroutine.Start(this.SmoothRotation(270f));
             }
         }
 
@@ -53,10 +71,10 @@ namespace Compass {
             this.cardinalDirectionBinding.Update();
             AssetDatabase.global.SaveSettingsNow();
         }
-        private IEnumerator SmoothRotation() {
+        private IEnumerator SmoothRotation(float y) {
             CameraUpdateSystem cameraUpdateSystem = this.World.GetExistingSystemManaged<CameraUpdateSystem>();
             Vector3 existingRotation = cameraUpdateSystem.activeCameraController.rotation;
-            Vector3 targetRotation = new Vector3(existingRotation.x, 0f, existingRotation.z);
+            Vector3 targetRotation = new Vector3(existingRotation.x, y, existingRotation.z);
             float smoothTime = 0.3f;
 
             float elapsedTime = 0;
