@@ -3,6 +3,7 @@ using System.Collections;
 using Colossal.IO.AssetDatabase;
 using Colossal.UI.Binding;
 
+using Compass.Consts;
 using Compass.Helpers;
 
 using Game.Rendering;
@@ -20,20 +21,20 @@ namespace Compass {
         protected override void OnCreate() {
             base.OnCreate();
 
-            this.rotationBinding = new GetterValueBinding<float>("Compass", "Rotation", () => this.rotation);
+            this.rotationBinding = new GetterValueBinding<float>(StringConsts.Compass, StringConsts.Rotation, () => this.rotation);
             this.AddBinding(this.rotationBinding);
 
-            this.AddBinding(new TriggerBinding("Compass", nameof(this.SetToNorth), this.SetToNorth));
-            this.AddBinding(new TriggerBinding("Compass", nameof(this.SetToEast), this.SetToEast));
-            this.AddBinding(new TriggerBinding("Compass", nameof(this.SetToSouth), this.SetToSouth));
-            this.AddBinding(new TriggerBinding("Compass", nameof(this.SetToWest), this.SetToWest));
+            this.AddBinding(new TriggerBinding(StringConsts.Compass, nameof(this.SetToNorth), this.SetToNorth));
+            this.AddBinding(new TriggerBinding(StringConsts.Compass, nameof(this.SetToEast), this.SetToEast));
+            this.AddBinding(new TriggerBinding(StringConsts.Compass, nameof(this.SetToSouth), this.SetToSouth));
+            this.AddBinding(new TriggerBinding(StringConsts.Compass, nameof(this.SetToWest), this.SetToWest));
 
-            this.AddBinding(new TriggerBinding<float>("Compass", nameof(this.SetToAngle), (angle) => this.SetToAngle(angle)));
+            this.AddBinding(new TriggerBinding<float>(StringConsts.Compass, nameof(this.SetToAngle), (angle) => this.SetToAngle(angle)));
 
-            this.cardinalDirectionBinding = new GetterValueBinding<bool>("Compass", nameof(Mod.CompassModSettings.CardinalDirectionMode), () => Mod.CompassModSettings.CardinalDirectionMode);
+            this.cardinalDirectionBinding = new GetterValueBinding<bool>(StringConsts.Compass, nameof(Mod.CompassModSettings.CardinalDirectionMode), () => Mod.CompassModSettings.CardinalDirectionMode);
             this.AddBinding(this.cardinalDirectionBinding);
 
-            this.AddBinding(new TriggerBinding<bool>("Compass", nameof(this.SetCardinalDirectionMode), (enabled) => this.SetCardinalDirectionMode(enabled)));
+            this.AddBinding(new TriggerBinding<bool>(StringConsts.Compass, nameof(this.SetCardinalDirectionMode), (enabled) => this.SetCardinalDirectionMode(enabled)));
         }
 
         private void SetToAngle(float angle) {

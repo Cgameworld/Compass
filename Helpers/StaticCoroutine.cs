@@ -25,7 +25,7 @@ namespace Compass.Helpers {
 
             if (m_instance != null) { return m_instance; }
 
-            GameObject instanceObject = new GameObject("StaticCoroutine");
+            GameObject instanceObject = new GameObject(nameof(StaticCoroutine));
             instanceObject.AddComponent<StaticCoroutine>();
             m_instance = instanceObject.GetComponent<StaticCoroutine>();
 
