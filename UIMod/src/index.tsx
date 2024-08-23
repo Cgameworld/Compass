@@ -69,7 +69,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                         position: 'relative',
                         width: editor ? '30rem' : '36rem',
                         height: editor ? '30rem' : '36rem',
-                        filter : editor ? 'opacity(0.9)': 'opacity(1)',
+                        filter: editor ? 'opacity(0.9)' : 'opacity(1)',
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center'
@@ -106,7 +106,7 @@ const register: ModRegistrar = (moduleRegistry) => {
 
     const SettingsWindow: React.FC<{ onClose: () => void, cardinalDirectionMode: boolean, editor: boolean }> = ({ onClose, cardinalDirectionMode, editor }) => {
         const toggleTextDir = () => {
-            trigger("Compass", "SetCardinalDirectionMode",!cardinalDirectionMode);
+            trigger("Compass", "SetCardinalDirectionMode", !cardinalDirectionMode);
             engine.trigger("audio.playSound", "select-item", 1);
         };
         
@@ -140,7 +140,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                         <div className="content_gqa">
                             <div className="infoview-panel-section_RXJ">
                                 <div className="content_1xS focusable_GEc item-focused_FuT">
-                                    <div className="row_S2v" style={{paddingBottom:'10rem'}}>
+                                    <div className="row_S2v" style={{ paddingBottom: '10rem' }}>
                                         <div className="left_Lgw row_S2v" style={{ fontSize: '18rem', alignItems: 'center' }}>Cardinal Direction Mode</div>
                                         <div className="right_k3O row_S2v">
                                             <button
