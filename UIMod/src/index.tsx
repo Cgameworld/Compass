@@ -127,6 +127,31 @@ const register: ModRegistrar = (moduleRegistry) => {
         const isSouth: boolean = RotationNum === 180;
         const isWest: boolean = RotationNum === 270;
 
+
+        // to use the button_ke4 - defaults (hover, selected, ...)
+        let cnameCardinalDirection = "button_ke4 button_h9N";
+        if (cardinalDirectionMode) {
+            cnameCardinalDirection += " selected";
+        }
+
+        let cnameN = "button_ke4 button_h9N";
+        if (isNorth) {
+            cnameN += " selected";
+        }
+        let cnameE = "button_ke4 button_h9N";
+        if (isEast) {
+            cnameE += " selected";
+        }
+        let cnameS = "button_ke4 button_h9N";
+        if (isSouth) {
+            cnameS += " selected";
+        }
+        let cnameW = "button_ke4 button_h9N";
+        if (isWest) {
+            cnameW += " selected";
+        }
+
+
         return (
             <div className="panel_YqS expanded collapsible advisor-panel_dXi advisor-panel_mrr top-right-panel_A2r" style={{
                 position: 'absolute',
@@ -155,10 +180,10 @@ const register: ModRegistrar = (moduleRegistry) => {
                                         <div className="left_Lgw row_S2v" style={{ fontSize: '18rem', alignItems: 'center' }}>Cardinal Direction Mode</div>
                                         <div className="right_k3O row_S2v">
                                             <button
-                                                className="button_WWa button_SH8"
+                                                className={cnameCardinalDirection}
                                                 style={{
-                                                    backgroundColor: cardinalDirectionMode ? 'var(--accentColorNormal)' : 'var(--menuHoverColorBright)',
-                                                    color: cardinalDirectionMode ? 'white' : 'var(--menuText1Normal)'
+                                                    justifyContent: 'center',
+                                                    color: 'white'
                                                 }}
                                                 onClick={toggleTextDir}
                                             >
@@ -170,11 +195,10 @@ const register: ModRegistrar = (moduleRegistry) => {
                                     <div className="row_S2v" style={{ paddingTop: '10rem', paddingBottom: '10rem' }}>
                                         <DescriptionTooltip title="N" description="Set orientation to North">
                                             <button
-                                                className="button_WWa button_SH8"
+                                                className={cnameN}
                                                 style={{
                                                     justifyContent: 'center',
-                                                    backgroundColor: isNorth ? 'var(--accentColorNormal)' : 'var(--menuHoverColorBright)',
-                                                    color: isNorth ? 'white' : 'var(--menuText1Normal)'
+                                                    color: 'white'
                                                 }}
                                                 onClick={() => {
                                                     trigger("Compass", "SetToNorth");
@@ -183,11 +207,10 @@ const register: ModRegistrar = (moduleRegistry) => {
                                         </DescriptionTooltip>
                                         <DescriptionTooltip title="E" description="Set orientation to East">
                                             <button
-                                                className="button_WWa button_SH8"
+                                                className={cnameE}
                                                 style={{
                                                     justifyContent: 'center',
-                                                    backgroundColor: isEast ? 'var(--accentColorNormal)' : 'var(--menuHoverColorBright)',
-                                                    color: isEast ? 'white' : 'var(--menuText1Normal)'
+                                                    color: 'white'
                                                 }}
                                                 onClick={() => {
                                                     trigger("Compass", "SetToEast");
@@ -196,11 +219,10 @@ const register: ModRegistrar = (moduleRegistry) => {
                                         </DescriptionTooltip>
                                         <DescriptionTooltip title="S" description="Set orientation to South">
                                             <button
-                                                className="button_WWa button_SH8"
+                                                className={cnameS}
                                                 style={{
                                                     justifyContent: 'center',
-                                                    backgroundColor: isSouth ? 'var(--accentColorNormal)' : 'var(--menuHoverColorBright)',
-                                                    color: isSouth ? 'white' : 'var(--menuText1Normal)'
+                                                    color: 'white'
                                                 }}
                                                 onClick={() => {
                                                     trigger("Compass", "SetToSouth");
@@ -209,11 +231,10 @@ const register: ModRegistrar = (moduleRegistry) => {
                                         </DescriptionTooltip>
                                         <DescriptionTooltip title="W" description="Set orientation to West">
                                             <button
-                                                className="button_WWa button_SH8"
+                                                className={cnameW}
                                                 style={{
                                                     justifyContent: 'center',
-                                                    backgroundColor: isWest ? 'var(--accentColorNormal)' : 'var(--menuHoverColorBright)',
-                                                    color: isWest ? 'white' : 'var(--menuText1Normal)'
+                                                    color: 'white'
                                                 }}
                                                 onClick={() => {
                                                     trigger("Compass", "SetToWest");
