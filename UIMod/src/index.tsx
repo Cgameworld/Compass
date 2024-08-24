@@ -56,8 +56,6 @@ const register: ModRegistrar = (moduleRegistry) => {
         const toolTipDescription = currentOrientation + " - Click to open options";
 
         // to indicate the 'general' selection state
-        // within the editor, the background is still blue, though UIStyle dark orange is selected...
-        // TODO: UIStyle DarkOrange in Editor
         let cname = "button_ke4 button_h9N";
         if (editor) {
             cname = "button_FBo button_ECf item_It6 item-mouse-states_Fmi item-selected_tAM item-focused_FuT toggle-states_DTm button_FBo button_ECf item_It6 item-mouse-states_Fmi item-selected_tAM item-focused_FuT toggle-states_DTm item_IYJ";
