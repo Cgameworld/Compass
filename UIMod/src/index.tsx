@@ -58,7 +58,6 @@ const register: ModRegistrar = (moduleRegistry) => {
         return (
             <DescriptionTooltip title="Compass" description={toolTipDescription}>
                 <button
-                    id="MapTextureReplacer-MainGameButton"
                     className={editor ? "button_FBo button_ECf item_It6 item-mouse-states_Fmi item-selected_tAM item-focused_FuT toggle-states_DTm button_FBo button_ECf item_It6 item-mouse-states_Fmi item-selected_tAM item-focused_FuT toggle-states_DTm item_IYJ" : "button_ke4 button_h9N"}
                     onClick={toggleSettings}
                 >
