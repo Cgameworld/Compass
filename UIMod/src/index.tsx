@@ -146,11 +146,10 @@ const register: ModRegistrar = (moduleRegistry) => {
                                     <div className="row_S2v" style={{ paddingBottom: '10rem' }}>
                                         <div className="left_Lgw row_S2v" style={{ fontSize: '18rem', alignItems: 'center' }}>Cardinal Direction Mode</div>
                                         <div className="right_k3O row_S2v">
-                                            {/* TODO: UIStyle DarkOrange; bg is always blue */}
                                             <button
                                                 className="button_WWa button_SH8"
                                                 style={{
-                                                    backgroundColor: cardinalDirectionMode ? 'var(--selectedColor)' : 'var(--menuHoverColorBright)',
+                                                    backgroundColor: cardinalDirectionMode ? 'var(--accentColorNormal)' : 'var(--menuHoverColorBright)',
                                                     color: cardinalDirectionMode ? 'white' : 'var(--menuText1Normal)'
                                                 }}
                                                 onClick={toggleTextDir}
@@ -161,54 +160,58 @@ const register: ModRegistrar = (moduleRegistry) => {
                                     </div>
                                     <SliderMod title={"Heading"} min={0} max={360} sliderPos={RotationNum} onInputChange={handleSliderInputChange} />
                                     <div className="row_S2v" style={{ paddingTop: '10rem', paddingBottom: '10rem' }}>
-                                        {/* TODO: UIStyle DarkOrange; bg is always blue */}
-                                        <button
-                                            className="button_WWa button_SH8"
-                                            style={{
-                                                justifyContent: 'center',
-                                                backgroundColor: isNorth ? 'var(--selectedColor)' : 'var(--menuHoverColorBright)',
-                                                color: isNorth ? 'white' : 'var(--menuText1Normal)'
-                                            }}
-                                            onClick={() => {
-                                                trigger("Compass", "SetToNorth");
-                                                engine.trigger("audio.playSound", "select-item", 1);
-                                            }}>N</button>
-                                        {/* TODO: UIStyle DarkOrange; bg is always blue */}
-                                        <button
-                                            className="button_WWa button_SH8"
-                                            style={{
-                                                justifyContent: 'center',
-                                                backgroundColor: isEast ? 'var(--selectedColor)' : 'var(--menuHoverColorBright)',
-                                                color: isEast ? 'white' : 'var(--menuText1Normal)'
-                                            }}
-                                            onClick={() => {
-                                                trigger("Compass", "SetToEast");
-                                                engine.trigger("audio.playSound", "select-item", 1);
-                                            }}>E</button>
-                                        {/* TODO: UIStyle DarkOrange; bg is always blue */}
-                                        <button
-                                            className="button_WWa button_SH8"
-                                            style={{
-                                                justifyContent: 'center',
-                                                backgroundColor: isSouth ? 'var(--selectedColor)' : 'var(--menuHoverColorBright)',
-                                                color: isSouth ? 'white' : 'var(--menuText1Normal)'
-                                            }}
-                                            onClick={() => {
-                                                trigger("Compass", "SetToSouth");
-                                                engine.trigger("audio.playSound", "select-item", 1);
-                                            }}>S</button>
-                                        {/* TODO: UIStyle DarkOrange; bg is always blue */}
-                                        <button
-                                            className="button_WWa button_SH8"
-                                            style={{
-                                                justifyContent: 'center',
-                                                backgroundColor: isWest ? 'var(--selectedColor)' : 'var(--menuHoverColorBright)',
-                                                color: isWest ? 'white' : 'var(--menuText1Normal)'
-                                            }}
-                                            onClick={() => {
-                                                trigger("Compass", "SetToWest");
-                                                engine.trigger("audio.playSound", "select-item", 1);
-                                            }}>W</button>
+                                        <DescriptionTooltip title="N" description="Set orientation to North">
+                                            <button
+                                                className="button_WWa button_SH8"
+                                                style={{
+                                                    justifyContent: 'center',
+                                                    backgroundColor: isNorth ? 'var(--accentColorNormal)' : 'var(--menuHoverColorBright)',
+                                                    color: isNorth ? 'white' : 'var(--menuText1Normal)'
+                                                }}
+                                                onClick={() => {
+                                                    trigger("Compass", "SetToNorth");
+                                                    engine.trigger("audio.playSound", "select-item", 1);
+                                                    }}>N</button>
+                                        </DescriptionTooltip>
+                                        <DescriptionTooltip title="E" description="Set orientation to East">
+                                            <button
+                                                className="button_WWa button_SH8"
+                                                style={{
+                                                    justifyContent: 'center',
+                                                    backgroundColor: isEast ? 'var(--accentColorNormal)' : 'var(--menuHoverColorBright)',
+                                                    color: isEast ? 'white' : 'var(--menuText1Normal)'
+                                                }}
+                                                onClick={() => {
+                                                    trigger("Compass", "SetToEast");
+                                                    engine.trigger("audio.playSound", "select-item", 1);
+                                                }}>E</button>
+                                        </DescriptionTooltip>
+                                        <DescriptionTooltip title="S" description="Set orientation to South">
+                                            <button
+                                                className="button_WWa button_SH8"
+                                                style={{
+                                                    justifyContent: 'center',
+                                                    backgroundColor: isSouth ? 'var(--accentColorNormal)' : 'var(--menuHoverColorBright)',
+                                                    color: isSouth ? 'white' : 'var(--menuText1Normal)'
+                                                }}
+                                                onClick={() => {
+                                                    trigger("Compass", "SetToSouth");
+                                                    engine.trigger("audio.playSound", "select-item", 1);
+                                                }}>S</button>
+                                        </DescriptionTooltip>
+                                        <DescriptionTooltip title="W" description="Set orientation to West">
+                                            <button
+                                                className="button_WWa button_SH8"
+                                                style={{
+                                                    justifyContent: 'center',
+                                                    backgroundColor: isWest ? 'var(--accentColorNormal)' : 'var(--menuHoverColorBright)',
+                                                    color: isWest ? 'white' : 'var(--menuText1Normal)'
+                                                }}
+                                                onClick={() => {
+                                                    trigger("Compass", "SetToWest");
+                                                    engine.trigger("audio.playSound", "select-item", 1);
+                                                }}>W</button>
+                                        </DescriptionTooltip>
                                     </div>
                                     <div className="bottom-padding_JS3"></div>
                                 </div>
