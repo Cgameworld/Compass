@@ -189,7 +189,7 @@ internal partial class CompassUISystem : UISystemBase {
         // occurs whenever a SaveGame is loaded or a new Game is started
     }
 
-    public float GetNorthCorrection() {
+    private float GetNorthCorrection() {
         float north = 0;
         if (this.MapName is not null
             && !String.IsNullOrEmpty(this.MapName)
