@@ -83,6 +83,10 @@
         </None>
     </ItemGroup>
 
+    <ItemGroup>
+        <None Include="Docs\**\*.*" />
+    </ItemGroup>
+
     <Target Name="BuildUI" AfterTargets="AfterBuild">
         <Exec Command="npm install" WorkingDirectory="$(ProjectDir)/UIMod" />
         <Exec Command="npm run build" WorkingDirectory="$(ProjectDir)/UIMod" />
