@@ -109,7 +109,9 @@ internal partial class CompassUISystem : UISystemBase {
         float corrected = this.CorrectNorthPositive(angle);
         CameraUpdateSystem cameraUpdateSystem = this.World.GetExistingSystemManaged<CameraUpdateSystem>();
         Vector3 existingRotation = cameraUpdateSystem.activeCameraController.rotation;
-        Vector3 targetRotation = new Vector3(existingRotation.x, corrected, existingRotation.z);
+        Vector3 targetRotation = new Vector3(existingRotation.x,
+                                             corrected,
+                                             existingRotation.z);
         cameraUpdateSystem.activeCameraController.rotation = targetRotation;
     }
 
@@ -126,7 +128,7 @@ internal partial class CompassUISystem : UISystemBase {
         this.TryStart(Orientations.W);
     }
     private void TryStart(Orientations orientation) {
-        if (Camera.main == null) {
+        if (Camera.main is null) {
             return;
         }
         float y = this.CorrectNorthPositive((float) orientation);
@@ -160,12 +162,12 @@ internal partial class CompassUISystem : UISystemBase {
     }
 
     protected override void OnUpdate() {
-        if (Camera.main == null) {
+        if (Camera.main is null) {
             return;
         }
         CameraUpdateSystem cameraUpdateSystem = this.World.GetExistingSystemManaged<CameraUpdateSystem>();
-        if (cameraUpdateSystem == null
-            || cameraUpdateSystem.activeCameraController == null) {
+        if (cameraUpdateSystem is null
+            || cameraUpdateSystem.activeCameraController is null) {
             return;
         }
         this.rotation = this.CorrectNorthNegative(cameraUpdateSystem.activeCameraController.rotation.y);
@@ -227,10 +229,10 @@ internal partial class CompassUISystem : UISystemBase {
     }
 
     /// <summary>
-    ///     corrects values that come from the UI
+    ///     corrects <paramref name="angle"/>s that come from the UI
     ///     <br/>
     ///     <br/>
-    ///     the incoming <paramref name="angle"/> is '0-based' (0 is north/should become north)
+    ///     the incoming <paramref name="angle"/> is '0-based' (0 is north/should be north)
     /// </summary>
     /// <param name="angle">
     ///     the angle from the slider/the N-E-S-W-Buttons
@@ -245,13 +247,13 @@ internal partial class CompassUISystem : UISystemBase {
         return y;
     }
     /// <summary>
-    ///     corrects the values that go to the UI
+    ///     corrects the <paramref name="angle"/>s that go to the UI
     ///     <br/>
     ///     <br/>
     ///     from the cam-system
     ///     <br/>
     ///     <br/>
-    ///     the incoming value is NOT '0-based'; 'it has to become 0'
+    ///     the incoming <paramref name="angle"/> is NOT '0-based'; 'it has to become 0'
     /// </summary>
     /// <param name="angle">
     ///     the angle from the cam-system
