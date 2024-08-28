@@ -13,9 +13,17 @@ const register: ModRegistrar = (moduleRegistry) => {
     const Rotation$ = bindValue<number>('Compass', 'Rotation');
     const CardinalDirectionMode$ = bindValue<boolean>('Compass', 'CardinalDirectionMode');
 
+    const IsNorthAdjusted$ = bindValue<boolean>('Compass', 'IsNorthAdjusted');
+
+    const IsNorthAdjustable$ = bindValue<boolean>('Compass', 'IsNorthAdjustable');
+
+    const correctAngle = (angleToCorrect: number): number => { 
+        return Math.round(((angleToCorrect + 360) % 360));
+    }
+
     const getDirection = (rotation: number): string => {
         const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-        const normalizedRotation = ((rotation % 360) + 360) % 360;
+        const normalizedRotation = correctAngle(rotation);
         const index = Math.round(normalizedRotation / 45) % 8;
         return directions[index];
     };
@@ -52,14 +60,21 @@ const register: ModRegistrar = (moduleRegistry) => {
             }
         }, [showSettings, cardinalDirectionMode]);
 
-        const currentOrientation = Math.round((useValue(Rotation$) + 360) % 360) + "\u00b0 " + getDirection(RotationNum);
+        const currentOrientation = correctAngle(useValue(Rotation$)) + "\u00b0 " + getDirection(RotationNum);
         const toolTipDescription = currentOrientation + " - Click to open options";
 
+        // to indicate the 'general' selection state
+        let cname = "button_ke4 button_h9N";
+        if (editor) {
+            cname = "button_FBo button_ECf item_It6 item-mouse-states_Fmi item-selected_tAM item-focused_FuT toggle-states_DTm button_FBo button_ECf item_It6 item-mouse-states_Fmi item-selected_tAM item-focused_FuT toggle-states_DTm item_IYJ";
+        }
+        if (showSettings) {
+            cname += " selected";
+        }
         return (
-            <DescriptionTooltip title="Compass" description={toolTipDescription}> 
+            <DescriptionTooltip title="Compass" description={toolTipDescription}>
                 <button
-                    id="MapTextureReplacer-MainGameButton"
-                    className={editor ? "button_FBo button_ECf item_It6 item-mouse-states_Fmi item-selected_tAM item-focused_FuT toggle-states_DTm button_FBo button_ECf item_It6 item-mouse-states_Fmi item-selected_tAM item-focused_FuT toggle-states_DTm item_IYJ" : "button_ke4 button_h9N"}
+                    className={cname}
                     onClick={toggleSettings}
                 >
                     <div className="tinted-icon_iKo icon_be5" style={{
@@ -69,7 +84,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                         position: 'relative',
                         width: editor ? '30rem' : '36rem',
                         height: editor ? '30rem' : '36rem',
-                        filter : editor ? 'opacity(0.9)': 'opacity(1)',
+                        filter: editor ? 'opacity(0.9)' : 'opacity(1)',
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center'
@@ -98,7 +113,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                                 transformOrigin: 'center'
                             }} />
                         )}
-                    </div> 
+                    </div>
                 </button>
             </DescriptionTooltip>
         );
@@ -106,15 +121,54 @@ const register: ModRegistrar = (moduleRegistry) => {
 
     const SettingsWindow: React.FC<{ onClose: () => void, cardinalDirectionMode: boolean, editor: boolean }> = ({ onClose, cardinalDirectionMode, editor }) => {
         const toggleTextDir = () => {
-            trigger("Compass", "SetCardinalDirectionMode",!cardinalDirectionMode);
+            trigger("Compass", "SetCardinalDirectionMode", !cardinalDirectionMode);
             engine.trigger("audio.playSound", "select-item", 1);
         };
-        
+
         const handleSliderInputChange = (newValue: number) => {
             trigger("Compass", "SetToAngle", newValue);
         };
 
-        const RotationNum: number = Math.round((useValue(Rotation$) + 360) % 360);
+        const RotationNum: number = correctAngle(useValue(Rotation$));
+        const isNorth: boolean = RotationNum === 0 || RotationNum === 360;
+        const isEast: boolean = RotationNum === 90;
+        const isSouth: boolean = RotationNum === 180;
+        const isWest: boolean = RotationNum === 270;
+
+
+        let isMakeNorthVisible = false;
+
+        // to use the button_ke4 - defaults (hover, selected, ...)
+        let cnameCardinalDirection = "button_ke4 button_h9N";
+        if (cardinalDirectionMode) {
+            cnameCardinalDirection += " selected";
+        }
+
+        let cnameN = "button_ke4 button_h9N";
+        if (isNorth) {
+            cnameN += " selected";
+            // no need to make north to north...
+            isMakeNorthVisible = false;
+        }
+        let cnameE = "button_ke4 button_h9N";
+        if (isEast) {
+            cnameE += " selected";
+            isMakeNorthVisible = true;
+        }
+        let cnameS = "button_ke4 button_h9N";
+        if (isSouth) {
+            cnameS += " selected";
+            isMakeNorthVisible = true;
+        }
+        let cnameW = "button_ke4 button_h9N";
+        if (isWest) {
+            cnameW += " selected";
+            isMakeNorthVisible = true;
+        }
+
+        let isNorthAdjusted = useValue(IsNorthAdjusted$);
+
+        let isNorthAdjustable = useValue(IsNorthAdjustable$);
 
         return (
             <div className="panel_YqS expanded collapsible advisor-panel_dXi advisor-panel_mrr top-right-panel_A2r" style={{
@@ -124,7 +178,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                 right: editor ? undefined : '0rem',
                 display: 'flex',
                 width: '310rem',
-                height: '190rem'
+                height: isNorthAdjustable ? '250rem' : '190rem'
             }}>
                 <div className="header_H_U header_Bpo child-opacity-transition_nkS">
                     <div className="title-bar_PF4">
@@ -140,14 +194,14 @@ const register: ModRegistrar = (moduleRegistry) => {
                         <div className="content_gqa">
                             <div className="infoview-panel-section_RXJ">
                                 <div className="content_1xS focusable_GEc item-focused_FuT">
-                                    <div className="row_S2v" style={{paddingBottom:'10rem'}}>
+                                    <div className="row_S2v" style={{ paddingBottom: '10rem' }}>
                                         <div className="left_Lgw row_S2v" style={{ fontSize: '18rem', alignItems: 'center' }}>Cardinal Direction Mode</div>
                                         <div className="right_k3O row_S2v">
                                             <button
-                                                className="button_WWa button_SH8"
+                                                className={cnameCardinalDirection}
                                                 style={{
-                                                    backgroundColor: cardinalDirectionMode ? 'var(--selectedColor)' : 'var(--menuHoverColorBright)',
-                                                    color: cardinalDirectionMode ? 'white' : 'var(--menuText1Normal)'
+                                                    justifyContent: 'center',
+                                                    color: 'white'
                                                 }}
                                                 onClick={toggleTextDir}
                                             >
@@ -155,12 +209,107 @@ const register: ModRegistrar = (moduleRegistry) => {
                                             </button>
                                         </div>
                                     </div>
-                                    <SliderMod title={"Heading"} min={0} max={360} sliderPos={RotationNum} onInputChange={handleSliderInputChange} />                                   
-                                    <div className="row_S2v" style={{ paddingTop: '10rem', paddingBottom: '10rem' }}>
-                                        <button className="button_WWa button_SH8" style={{ justifyContent: 'center' }} onClick={() => {
-                                            trigger("Compass", "SetToNorth");
-                                            engine.trigger("audio.playSound", "select-item", 1);
-                                        }}>Reset to North</button>
+                                    <SliderMod title={"Heading"} min={0} max={360} sliderPos={RotationNum} onInputChange={handleSliderInputChange} />
+                                    <div
+                                        className="row_S2v"
+                                        style={{
+                                            paddingTop: '10rem',
+                                            paddingBottom: '10rem',
+                                            alignContent: 'center',
+                                            display: isNorthAdjustable ? 'flex' : 'none',
+                                        }}>
+                                        <DescriptionTooltip
+                                            title="Adjust North"
+                                            description="Make the current orientation to North for this Map">
+                                            <button
+                                                className="button_ke4 button_h9N"
+                                                style={{
+                                                    color: 'white',
+                                                    width: '120rem',
+                                                    alignContent: 'center',
+                                                    visibility: isMakeNorthVisible ? 'visible' : 'hidden'
+                                                }}
+                                                onClick={() => {
+                                                    trigger("Compass", "MakeNorth");
+                                                    engine.trigger("audio.playSound", "select-item", 1);
+                                                }}>Make North</button>
+                                        </DescriptionTooltip>
+                                        <DescriptionTooltip
+                                            title="Reset North-Adjustment"
+                                            description="Reset North-Adjustment to Map-Defaults">
+                                            <button
+                                                className="button_ke4 button_h9N"
+                                                style={{
+                                                    color: 'white',
+                                                    width: '120rem',
+                                                    alignContent: 'center',
+                                                    visibility: isNorthAdjusted ? 'visible' : 'hidden'
+                                                }}
+                                                onClick={() => {
+                                                    trigger("Compass", "ResetNorth");
+                                                    engine.trigger("audio.playSound", "select-item", 1);
+                                                }}>Reset North</button>
+                                        </DescriptionTooltip>
+                                    </div>
+                                    <div
+                                        className="row_S2v"
+                                        style={{
+                                            paddingTop: '10rem',
+                                            paddingBottom: '10rem',
+                                            alignContent: 'center'
+                                        }}>
+                                        <DescriptionTooltip title="N" description="Set orientation to North">
+                                            <button
+                                                className={cnameN}
+                                                style={{
+                                                    justifyContent: 'center',
+                                                    alignContent: 'center',
+                                                    color: 'white'
+                                                }}
+                                                onClick={() => {
+                                                    trigger("Compass", "SetToNorth");
+                                                    engine.trigger("audio.playSound", "select-item", 1);
+                                                    }}>N</button>
+                                        </DescriptionTooltip>
+                                        <DescriptionTooltip title="E" description="Set orientation to East">
+                                            <button
+                                                className={cnameE}
+                                                style={{
+                                                    justifyContent: 'center',
+                                                    alignContent: 'center',
+                                                    color: 'white'
+                                                }}
+                                                onClick={() => {
+                                                    trigger("Compass", "SetToEast");
+                                                    engine.trigger("audio.playSound", "select-item", 1);
+                                                }}>E</button>
+                                        </DescriptionTooltip>
+                                        <DescriptionTooltip title="S" description="Set orientation to South">
+                                            <button
+                                                className={cnameS}
+                                                style={{
+                                                    justifyContent: 'center',
+                                                    alignContent: 'center',
+                                                    color: 'white'
+                                                }}
+                                                onClick={() => {
+                                                    trigger("Compass", "SetToSouth");
+                                                    engine.trigger("audio.playSound", "select-item", 1);
+                                                }}>S</button>
+                                        </DescriptionTooltip>
+                                        <DescriptionTooltip title="W" description="Set orientation to West">
+                                            <button
+                                                className={cnameW}
+                                                style={{
+                                                    justifyContent: 'center',
+                                                    alignContent: 'center',
+                                                    color: 'white'
+                                                }}
+                                                onClick={() => {
+                                                    trigger("Compass", "SetToWest");
+                                                    engine.trigger("audio.playSound", "select-item", 1);
+                                                }}>W</button>
+                                        </DescriptionTooltip>
                                     </div>
                                     <div className="bottom-padding_JS3"></div>
                                 </div>
