@@ -1,4 +1,4 @@
-![Preview](https://raw.githubusercontent.com/Cgameworld/Compass/master/Properties/Gallery1.jpg)
+![Preview](Properties/Gallery1.jpg)
 
 Compass is a mod for Cities: Skylines 2 that adds a new dynamic icon to the game allowing you to always see which direction your camera is relative to North.
 
@@ -12,7 +12,11 @@ In the settings window, the heading can be precisely changed, and a Reset To Nor
 
 # Notes
 
-This mod works in game and in the editor. In game, the icon is added to the top left corner near the settings icon, while in the editor it is added to the top right corner next to the natural resource panel shortcut.
+This mod works in game and in the editor.
+
+In game, the icon is added to the top right corner near the settings icon,
+
+while in the editor it is added to the top left corner next to the natural resource panel shortcut.
 
 # Conclusion
 
