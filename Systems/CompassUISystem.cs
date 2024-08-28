@@ -35,6 +35,7 @@ internal partial class CompassUISystem : UISystemBase {
     private TriggerBinding TrgResetNorth { get; set; }
 
 
+    public GetterValueBinding<bool> IsNorthAdjustableBinding { get; set; }
     public GetterValueBinding<bool> IsNorthAdjustedBinding { get; set; }
 
 
@@ -44,8 +45,14 @@ internal partial class CompassUISystem : UISystemBase {
 
     public CompassUISystem(Setting compassModSettings) {
         this.CompassModSettings = compassModSettings;
+        this.CompassModSettings.OnIsNorthAdjustableChanged += this.OnAdjustableNorthChanged;
     }
 
+    private void OnAdjustableNorthChanged() {
+        this.IsNorthAdjustableBinding.Update();
+        this.IsNorthAdjustedBinding.Update();
+        this.RotationBinding.Update();
+    }
 
     protected override void OnCreate() {
         base.OnCreate();
@@ -94,6 +101,10 @@ internal partial class CompassUISystem : UISystemBase {
         this.IsNorthAdjustedBinding = new GetterValueBinding<bool>(StringConsts.Compass,
                                                                    nameof(this.IsNorthAdjusted),
                                                                    this.IsNorthAdjusted);
+
+        this.IsNorthAdjustableBinding = new GetterValueBinding<bool>(StringConsts.Compass,
+                                                                     nameof(this.CompassModSettings.IsNorthAdjustable),
+                                                                     () => this.CompassModSettings.IsNorthAdjustable);
     }
 
     private void AddBindings() {
@@ -114,6 +125,8 @@ internal partial class CompassUISystem : UISystemBase {
         this.AddBinding(this.TrgResetNorth);
 
         this.AddBinding(this.IsNorthAdjustedBinding);
+
+        this.AddBinding(this.IsNorthAdjustableBinding);
     }
 
     private void SetToAngle(float angle) {
@@ -202,6 +215,9 @@ internal partial class CompassUISystem : UISystemBase {
 
     private float GetNorthAdjustment() {
         float north = 0;
+        if (!this.CompassModSettings.IsNorthAdjustable) {
+            return north;
+        }
         if (this.MapName is not null
             && !String.IsNullOrEmpty(this.MapName)
             && !String.IsNullOrWhiteSpace(this.MapName)) {
@@ -211,6 +227,9 @@ internal partial class CompassUISystem : UISystemBase {
     }
 
     private bool IsNorthAdjusted() {
+        if (!this.CompassModSettings.IsNorthAdjustable) {
+            return false;
+        }
         if (this.MapName is not null
             && !String.IsNullOrEmpty(this.MapName)
             && !String.IsNullOrWhiteSpace(this.MapName)) {
@@ -222,6 +241,9 @@ internal partial class CompassUISystem : UISystemBase {
     }
 
     private void MakeNorth() {
+        if (!this.CompassModSettings.IsNorthAdjustable) {
+            return;
+        }
         if (this.MapName is not null
             && !String.IsNullOrEmpty(this.MapName)
             && !String.IsNullOrWhiteSpace(this.MapName)) {
@@ -237,6 +259,9 @@ internal partial class CompassUISystem : UISystemBase {
     }
 
     private void ResetNorth() {
+        if (!this.CompassModSettings.IsNorthAdjustable) {
+            return;
+        }
         if (this.MapName is not null
             && !String.IsNullOrEmpty(this.MapName)
             && !String.IsNullOrWhiteSpace(this.MapName)) {

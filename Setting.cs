@@ -14,10 +14,27 @@ using Unity.Entities;
 namespace Compass;
 [FileLocation($"{StringConsts.ModsSettings}/{StringConsts.Compass}/{StringConsts.Compass}")]
 public class Setting : ModSetting {
+
+    public delegate void OnIsNorthAdjustableChangedHandler();
+    public event OnIsNorthAdjustableChangedHandler? OnIsNorthAdjustableChanged;
+
+
+
     private CompassUISystem m_CompassUISystem;
 
     public Setting(IMod mod) : base(mod) {
         this.SetDefaults();
+    }
+
+    private bool _IsNorthAdjustable;
+    public bool IsNorthAdjustable {
+        get => this._IsNorthAdjustable;
+        set {
+            if (this._IsNorthAdjustable != value) {
+                this._IsNorthAdjustable = value;
+                OnIsNorthAdjustableChanged?.Invoke();
+            }
+        }
     }
 
     [SettingsUIButton]
@@ -35,6 +52,7 @@ public class Setting : ModSetting {
     public bool CardinalDirectionMode { get; set; }
 
     public override void SetDefaults() {
+        this.IsNorthAdjustable = false;
         this.CardinalDirectionMode = false;
         this.MapOrientations = [];
     }
@@ -56,6 +74,8 @@ public class LocaleEN : IDictionarySource {
         return new Dictionary<string, string>
         {
             { this.m_Setting.GetSettingsLocaleID(), "Compass" },
+            { this.m_Setting.GetOptionLabelLocaleID(nameof(Setting.IsNorthAdjustable)), "Let me adjust North" },
+            { this.m_Setting.GetOptionDescLocaleID(nameof(Setting.IsNorthAdjustable)), "If this option is enabled/checked\nOrientation of what/where North is,\ncan be changed per Map.\nAdjustments/Changes will no longer come into effect\nbut should still be kept/saved\nwithin this mods settings-file."},
             { this.m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetModSettings)), "Reset Mod Settings" },
             { this.m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetModSettings)), "Reset Mod Settings to Default Values"},
             { this.m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetModSettings)), "Are you sure you want to reset all mod settings?"}

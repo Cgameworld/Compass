@@ -15,6 +15,8 @@ const register: ModRegistrar = (moduleRegistry) => {
 
     const IsNorthAdjusted$ = bindValue<boolean>('Compass', 'IsNorthAdjusted');
 
+    const IsNorthAdjustable$ = bindValue<boolean>('Compass', 'IsNorthAdjustable');
+
     const correctAngle = (angleToCorrect: number): number => { 
         return Math.round(((angleToCorrect + 360) % 360));
     }
@@ -166,6 +168,8 @@ const register: ModRegistrar = (moduleRegistry) => {
 
         let isNorthAdjusted = useValue(IsNorthAdjusted$);
 
+        let isNorthAdjustable = useValue(IsNorthAdjustable$);
+
         return (
             <div className="panel_YqS expanded collapsible advisor-panel_dXi advisor-panel_mrr top-right-panel_A2r" style={{
                 position: 'absolute',
@@ -174,7 +178,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                 right: editor ? undefined : '0rem',
                 display: 'flex',
                 width: '310rem',
-                height: '250rem'
+                height: isNorthAdjustable ? '250rem' : '190rem'
             }}>
                 <div className="header_H_U header_Bpo child-opacity-transition_nkS">
                     <div className="title-bar_PF4">
@@ -211,7 +215,8 @@ const register: ModRegistrar = (moduleRegistry) => {
                                         style={{
                                             paddingTop: '10rem',
                                             paddingBottom: '10rem',
-                                            alignContent: 'center'
+                                            alignContent: 'center',
+                                            display: isNorthAdjustable ? 'flex' : 'none',
                                         }}>
                                         <DescriptionTooltip
                                             title="Adjust North"
