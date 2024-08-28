@@ -34,17 +34,13 @@ public class Setting : ModSetting {
     [SettingsUIHidden]
     public bool CardinalDirectionMode { get; set; }
 
-    [SettingsUIHidden]
-    public int MakeSureSave { get; set; }
-
     public override void SetDefaults() {
-        this.MakeSureSave = new System.Random().Next();
         this.CardinalDirectionMode = false;
-        this.MapOrientations = new Dictionary<string, float>();
+        this.MapOrientations = [];
     }
 
     [SettingsUIHidden]
-    public IDictionary<string, float> MapOrientations { get; set; } = new Dictionary<string, float>();
+    public Dictionary<string, float> MapOrientations { get; set; }
 
     public void Unload() {
 
