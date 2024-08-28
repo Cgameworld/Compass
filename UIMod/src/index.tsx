@@ -134,7 +134,7 @@ const register: ModRegistrar = (moduleRegistry) => {
         const isWest: boolean = RotationNum === 270;
 
 
-        let isNorthAdjustable = false;
+        let isMakeNorthVisible = false;
 
         // to use the button_ke4 - defaults (hover, selected, ...)
         let cnameCardinalDirection = "button_ke4 button_h9N";
@@ -146,22 +146,22 @@ const register: ModRegistrar = (moduleRegistry) => {
         if (isNorth) {
             cnameN += " selected";
             // no need to make north to north...
-            isNorthAdjustable = false;
+            isMakeNorthVisible = false;
         }
         let cnameE = "button_ke4 button_h9N";
         if (isEast) {
             cnameE += " selected";
-            isNorthAdjustable = true;
+            isMakeNorthVisible = true;
         }
         let cnameS = "button_ke4 button_h9N";
         if (isSouth) {
             cnameS += " selected";
-            isNorthAdjustable = true;
+            isMakeNorthVisible = true;
         }
         let cnameW = "button_ke4 button_h9N";
         if (isWest) {
             cnameW += " selected";
-            isNorthAdjustable = true;
+            isMakeNorthVisible = true;
         }
 
         let isNorthAdjusted = useValue(IsNorthAdjusted$);
@@ -222,7 +222,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                                                     color: 'white',
                                                     width: '120rem',
                                                     alignContent: 'center',
-                                                    visibility: isNorthAdjustable ? 'visible' : 'hidden'
+                                                    visibility: isMakeNorthVisible ? 'visible' : 'hidden'
                                                 }}
                                                 onClick={() => {
                                                     trigger("Compass", "MakeNorth");
