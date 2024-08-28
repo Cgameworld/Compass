@@ -49,7 +49,7 @@ the buttons 'Make North' and 'Reset North' arent displayed.
 
 For those who only want to use the Compass-Mod, but do not want to adjust the direction of North.
 
-Adjustments/Changes made while 'Let me adjust North' will no longer be effective but should still be kept/saved within this mods Settings-File.
+Adjustments/Changes made while 'Let me adjust North' is enabled will no longer be effective but should still be kept/saved within this mods Settings-File.
 
 # Notes
 

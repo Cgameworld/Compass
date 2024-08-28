@@ -75,7 +75,7 @@ public class LocaleEN : IDictionarySource {
         {
             { this.m_Setting.GetSettingsLocaleID(), "Compass" },
             { this.m_Setting.GetOptionLabelLocaleID(nameof(Setting.IsNorthAdjustable)), "Let me adjust North" },
-            { this.m_Setting.GetOptionDescLocaleID(nameof(Setting.IsNorthAdjustable)), "If this option is enabled/checked\nOrientation of what/where North is,\ncan be changed per Map.\nAdjustments/Changes will no longer come into effect\nbut should still be kept/saved\nwithin this mods settings-file."},
+            { this.m_Setting.GetOptionDescLocaleID(nameof(Setting.IsNorthAdjustable)), "If this option is enabled/checked\nOrientation of what/where North is,\ncan be changed per Map.\nIf this option is disabled/unchecked,\nAdjustments/Changes will no longer come into effect\nbut should still be kept/saved\nwithin this mods settings-file."},
             { this.m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetModSettings)), "Reset Mod Settings" },
             { this.m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetModSettings)), "Reset Mod Settings to Default Values"},
             { this.m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetModSettings)), "Are you sure you want to reset all mod settings?"}
