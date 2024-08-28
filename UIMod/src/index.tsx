@@ -13,9 +13,13 @@ const register: ModRegistrar = (moduleRegistry) => {
     const Rotation$ = bindValue<number>('Compass', 'Rotation');
     const CardinalDirectionMode$ = bindValue<boolean>('Compass', 'CardinalDirectionMode');
 
+    const correctAngle = (angleToCorrect: number): number => { 
+        return Math.round(((angleToCorrect + 360) % 360));
+    }
+
     const getDirection = (rotation: number): string => {
         const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-        const normalizedRotation = ((rotation % 360) + 360) % 360;
+        const normalizedRotation = correctAngle(rotation);
         const index = Math.round(normalizedRotation / 45) % 8;
         return directions[index];
     };
@@ -52,7 +56,7 @@ const register: ModRegistrar = (moduleRegistry) => {
             }
         }, [showSettings, cardinalDirectionMode]);
 
-        const currentOrientation = Math.round((useValue(Rotation$) + 360) % 360) + "\u00b0 " + getDirection(RotationNum);
+        const currentOrientation = correctAngle(useValue(Rotation$)) + "\u00b0 " + getDirection(RotationNum);
         const toolTipDescription = currentOrientation + " - Click to open options";
 
         // to indicate the 'general' selection state
@@ -121,12 +125,14 @@ const register: ModRegistrar = (moduleRegistry) => {
             trigger("Compass", "SetToAngle", newValue);
         };
 
-        const RotationNum: number = Math.round((useValue(Rotation$) + 360) % 360);
+        const RotationNum: number = correctAngle(useValue(Rotation$));
         const isNorth: boolean = RotationNum === 0 || RotationNum === 360;
         const isEast: boolean = RotationNum === 90;
         const isSouth: boolean = RotationNum === 180;
         const isWest: boolean = RotationNum === 270;
 
+
+        let isNorthAdjustable = false;
 
         // to use the button_ke4 - defaults (hover, selected, ...)
         let cnameCardinalDirection = "button_ke4 button_h9N";
@@ -137,18 +143,22 @@ const register: ModRegistrar = (moduleRegistry) => {
         let cnameN = "button_ke4 button_h9N";
         if (isNorth) {
             cnameN += " selected";
+            isNorthAdjustable = true;
         }
         let cnameE = "button_ke4 button_h9N";
         if (isEast) {
             cnameE += " selected";
+            isNorthAdjustable = true;
         }
         let cnameS = "button_ke4 button_h9N";
         if (isSouth) {
             cnameS += " selected";
+            isNorthAdjustable = true;
         }
         let cnameW = "button_ke4 button_h9N";
         if (isWest) {
             cnameW += " selected";
+            isNorthAdjustable = true;
         }
 
 
@@ -160,7 +170,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                 right: editor ? undefined : '0rem',
                 display: 'flex',
                 width: '310rem',
-                height: '190rem'
+                height: '250rem'
             }}>
                 <div className="header_H_U header_Bpo child-opacity-transition_nkS">
                     <div className="title-bar_PF4">
@@ -192,12 +202,58 @@ const register: ModRegistrar = (moduleRegistry) => {
                                         </div>
                                     </div>
                                     <SliderMod title={"Heading"} min={0} max={360} sliderPos={RotationNum} onInputChange={handleSliderInputChange} />
-                                    <div className="row_S2v" style={{ paddingTop: '10rem', paddingBottom: '10rem' }}>
+                                    <div
+                                        className="row_S2v"
+                                        style={{
+                                            paddingTop: '10rem',
+                                            paddingBottom: '10rem',
+                                            alignContent: 'center'
+                                        }}>
+                                        <DescriptionTooltip
+                                            title="Adjust North"
+                                            description="Make the current orientation to North for this Map">
+                                            <button
+                                                className="button_ke4 button_h9N"
+                                                style={{
+                                                    color: 'white',
+                                                    width: '120rem',
+                                                    alignContent: 'center',
+                                                    visibility: isNorthAdjustable ? 'visible' : 'hidden'
+                                                }}
+                                                onClick={() => {
+                                                    trigger("Compass", "MakeNorth");
+                                                    engine.trigger("audio.playSound", "select-item", 1);
+                                                }}>Make North</button>
+                                        </DescriptionTooltip>
+                                        <DescriptionTooltip
+                                            title="Reset North-Adjustment"
+                                            description="Reset North-Adjustment to Map-Defaults">
+                                            <button
+                                                className="button_ke4 button_h9N"
+                                                style={{
+                                                    color: 'white',
+                                                    width: '120rem',
+                                                    alignContent: 'center'
+                                                }}
+                                                onClick={() => {
+                                                    trigger("Compass", "ResetNorth");
+                                                    engine.trigger("audio.playSound", "select-item", 1);
+                                                }}>Reset North</button>
+                                        </DescriptionTooltip>
+                                    </div>
+                                    <div
+                                        className="row_S2v"
+                                        style={{
+                                            paddingTop: '10rem',
+                                            paddingBottom: '10rem',
+                                            alignContent: 'center'
+                                        }}>
                                         <DescriptionTooltip title="N" description="Set orientation to North">
                                             <button
                                                 className={cnameN}
                                                 style={{
                                                     justifyContent: 'center',
+                                                    alignContent: 'center',
                                                     color: 'white'
                                                 }}
                                                 onClick={() => {
@@ -210,6 +266,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                                                 className={cnameE}
                                                 style={{
                                                     justifyContent: 'center',
+                                                    alignContent: 'center',
                                                     color: 'white'
                                                 }}
                                                 onClick={() => {
@@ -222,6 +279,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                                                 className={cnameS}
                                                 style={{
                                                     justifyContent: 'center',
+                                                    alignContent: 'center',
                                                     color: 'white'
                                                 }}
                                                 onClick={() => {
@@ -234,6 +292,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                                                 className={cnameW}
                                                 style={{
                                                     justifyContent: 'center',
+                                                    alignContent: 'center',
                                                     color: 'white'
                                                 }}
                                                 onClick={() => {
