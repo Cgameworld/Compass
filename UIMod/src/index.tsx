@@ -143,7 +143,8 @@ const register: ModRegistrar = (moduleRegistry) => {
         let cnameN = "button_ke4 button_h9N";
         if (isNorth) {
             cnameN += " selected";
-            isNorthAdjustable = true;
+            // no need to make north to north...
+            isNorthAdjustable = false;
         }
         let cnameE = "button_ke4 button_h9N";
         if (isEast) {
