@@ -35,6 +35,9 @@ internal partial class CompassUISystem : UISystemBase {
     private TriggerBinding TrgResetNorth { get; set; }
 
 
+    public GetterValueBinding<bool> IsNorthAdjustedBinding { get; set; }
+
+
     private string? MapName { get; set; }
     private Setting CompassModSettings { get; }
 
@@ -85,6 +88,12 @@ internal partial class CompassUISystem : UISystemBase {
         this.TrgResetNorth = new TriggerBinding(StringConsts.Compass,
                                                 nameof(this.ResetNorth),
                                                 this.ResetNorth);
+
+
+
+        this.IsNorthAdjustedBinding = new GetterValueBinding<bool>(StringConsts.Compass,
+                                                                   nameof(this.IsNorthAdjusted),
+                                                                   this.IsNorthAdjusted);
     }
 
     private void AddBindings() {
@@ -103,6 +112,8 @@ internal partial class CompassUISystem : UISystemBase {
 
         this.AddBinding(this.TrgMakeNorth);
         this.AddBinding(this.TrgResetNorth);
+
+        this.AddBinding(this.IsNorthAdjustedBinding);
     }
 
     private void SetToAngle(float angle) {
@@ -189,7 +200,7 @@ internal partial class CompassUISystem : UISystemBase {
         // occurs whenever a SaveGame is loaded or a new Game is started
     }
 
-    private float GetNorthCorrection() {
+    private float GetNorthAdjustment() {
         float north = 0;
         if (this.MapName is not null
             && !String.IsNullOrEmpty(this.MapName)
@@ -197,6 +208,17 @@ internal partial class CompassUISystem : UISystemBase {
             this.CompassModSettings.MapOrientations.TryGetValue(this.MapName, out north);
         }
         return north;
+    }
+
+    private bool IsNorthAdjusted() {
+        if (this.MapName is not null
+            && !String.IsNullOrEmpty(this.MapName)
+            && !String.IsNullOrWhiteSpace(this.MapName)) {
+            this.CompassModSettings.MapOrientations.TryGetValue(this.MapName, out float north);
+            // value of north may also be less than zero
+            return north is not 0;
+        }
+        return false;
     }
 
     private void MakeNorth() {
@@ -210,6 +232,7 @@ internal partial class CompassUISystem : UISystemBase {
             this.CompassModSettings.MapOrientations[this.MapName] = (float) Math.Round(camY);
             this.rotation = 0;
             this.RotationBinding.Update();
+            this.IsNorthAdjustedBinding.Update();
         }
     }
 
@@ -225,6 +248,7 @@ internal partial class CompassUISystem : UISystemBase {
             // no need to correct the value, cause rotation is equal to camY now
             this.rotation = (float) Math.Round(camY);
             this.RotationBinding.Update();
+            this.IsNorthAdjustedBinding.Update();
         }
     }
 
@@ -241,7 +265,7 @@ internal partial class CompassUISystem : UISystemBase {
     ///     corrected y-value
     /// </returns>
     private float CorrectNorthPositive(float angle) {
-        float northCorrection = this.GetNorthCorrection();
+        float northCorrection = this.GetNorthAdjustment();
         float corrected = angle + northCorrection;
         float y = this.CorrectAngle(corrected);
         return y;
@@ -262,7 +286,7 @@ internal partial class CompassUISystem : UISystemBase {
     ///     the corrected y-value
     /// </returns>
     private float CorrectNorthNegative(float angle) {
-        float northCorrection = this.GetNorthCorrection();
+        float northCorrection = this.GetNorthAdjustment();
         float corrected = angle - northCorrection;
         float y = this.CorrectAngle(corrected);
         return y;

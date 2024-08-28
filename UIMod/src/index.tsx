@@ -13,6 +13,8 @@ const register: ModRegistrar = (moduleRegistry) => {
     const Rotation$ = bindValue<number>('Compass', 'Rotation');
     const CardinalDirectionMode$ = bindValue<boolean>('Compass', 'CardinalDirectionMode');
 
+    const IsNorthAdjusted$ = bindValue<boolean>('Compass', 'IsNorthAdjusted');
+
     const correctAngle = (angleToCorrect: number): number => { 
         return Math.round(((angleToCorrect + 360) % 360));
     }
@@ -162,6 +164,7 @@ const register: ModRegistrar = (moduleRegistry) => {
             isNorthAdjustable = true;
         }
 
+        let isNorthAdjusted = useValue(IsNorthAdjusted$);
 
         return (
             <div className="panel_YqS expanded collapsible advisor-panel_dXi advisor-panel_mrr top-right-panel_A2r" style={{
@@ -234,7 +237,8 @@ const register: ModRegistrar = (moduleRegistry) => {
                                                 style={{
                                                     color: 'white',
                                                     width: '120rem',
-                                                    alignContent: 'center'
+                                                    alignContent: 'center',
+                                                    visibility: isNorthAdjusted ? 'visible' : 'hidden'
                                                 }}
                                                 onClick={() => {
                                                     trigger("Compass", "ResetNorth");
