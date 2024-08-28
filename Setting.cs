@@ -40,12 +40,7 @@ public class Setting : ModSetting {
     public override void SetDefaults() {
         this.MakeSureSave = new System.Random().Next();
         this.CardinalDirectionMode = false;
-        // TODO: switch; its just for testing purposes
-        //this.MapOrientations = new Dictionary<string, float>();
-        this.MapOrientations = new Dictionary<string, float> {
-            { "Corral Riches", 180 },
-            { "Barrier Island", 270 }
-        };
+        this.MapOrientations = new Dictionary<string, float>();
     }
 
     [SettingsUIHidden]

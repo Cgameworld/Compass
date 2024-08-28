@@ -1,12 +1,15 @@
+using System;
 using System.Collections;
 
 using Colossal.IO.AssetDatabase;
+using Colossal.Serialization.Entities;
 using Colossal.UI.Binding;
 
 using Compass.Consts;
 using Compass.Enums;
 using Compass.Helpers;
 
+using Game;
 using Game.Rendering;
 using Game.UI;
 
@@ -29,11 +32,16 @@ internal partial class CompassUISystem : UISystemBase {
     private TriggerBinding TrgSetToWest { get; set; }
 
 
-    public MyMapSystem MyMapSystem { get; }
+    private TriggerBinding TrgMakeNorth { get; set; }
+    private TriggerBinding TrgResetNorth { get; set; }
 
 
-    public CompassUISystem(MyMapSystem myMapSystem) {
-        this.MyMapSystem = myMapSystem;
+    private string? MapName { get; set; }
+    private Setting CompassModSettings { get; }
+
+
+    public CompassUISystem(Setting compassModSettings) {
+        this.CompassModSettings = compassModSettings;
     }
 
 
@@ -66,8 +74,18 @@ internal partial class CompassUISystem : UISystemBase {
                                                              StringConsts.Rotation,
                                                              () => this.rotation);
         this.CardinalDirectionBinding = new GetterValueBinding<bool>(StringConsts.Compass,
-                                                                     nameof(Mod.CompassModSettings.CardinalDirectionMode),
-                                                                     () => Mod.CompassModSettings.CardinalDirectionMode);
+                                                                     nameof(this.CompassModSettings.CardinalDirectionMode),
+                                                                     () => this.CompassModSettings.CardinalDirectionMode);
+
+
+
+        this.TrgMakeNorth = new TriggerBinding(StringConsts.Compass,
+                                               nameof(this.MakeNorth),
+                                               this.MakeNorth);
+
+        this.TrgResetNorth = new TriggerBinding(StringConsts.Compass,
+                                                nameof(this.ResetNorth),
+                                                this.ResetNorth);
     }
 
     private void AddBindings() {
@@ -83,6 +101,9 @@ internal partial class CompassUISystem : UISystemBase {
         this.AddBinding(this.CardinalDirectionBinding);
 
         this.AddBinding(this.TrgCardinalDirectionMode);
+
+        this.AddBinding(this.TrgMakeNorth);
+        this.AddBinding(this.TrgResetNorth);
     }
 
     private void SetToAngle(float angle) {
@@ -114,7 +135,7 @@ internal partial class CompassUISystem : UISystemBase {
     }
     private void SetCardinalDirectionMode(bool enabled) {
         //Mod.Log.Info("SetCardinalDirectionMode: " + enabled);
-        Mod.CompassModSettings.CardinalDirectionMode = enabled;
+        this.CompassModSettings.CardinalDirectionMode = enabled;
         this.CardinalDirectionBinding.Update();
         AssetDatabase.global.SaveSettingsNow();
     }
@@ -151,6 +172,60 @@ internal partial class CompassUISystem : UISystemBase {
         this.RotationBinding.Update();
     }
 
+    protected override void OnGamePreload(Purpose purpose, GameMode mode) {
+        // occurs whenever a SaveGame is loaded or a new Game is started
+        this.MapName = this.World.GetExistingSystemManaged<MapMetadataSystem>().mapName;
+    }
+
+    protected override void OnGameLoaded(Context serializationContext) {
+        // occurs whenever a SaveGame is loaded or a new Game is started
+    }
+
+    protected override void OnGameLoadingComplete(Purpose purpose, GameMode mode) {
+        // occurs whenever the Game itself (Cities: Skylines II) is started
+        // AND
+        // occurs whenever a SaveGame is loaded or a new Game is started
+    }
+
+    public float GetNorthCorrection() {
+        float north = 0;
+        if (this.MapName is not null
+            && !String.IsNullOrEmpty(this.MapName)
+            && !String.IsNullOrWhiteSpace(this.MapName)) {
+            this.CompassModSettings.MapOrientations.TryGetValue(this.MapName, out north);
+        }
+        return north;
+    }
+
+    private void MakeNorth() {
+        if (this.MapName is not null
+            && !String.IsNullOrEmpty(this.MapName)
+            && !String.IsNullOrWhiteSpace(this.MapName)) {
+            // dont use this.rotation
+            // this.rotation is a corrected value
+            // here the original camera-rotation is needed
+            float camY = this.World.GetExistingSystemManaged<CameraUpdateSystem>().activeCameraController.rotation.y;
+            this.CompassModSettings.MapOrientations[this.MapName] = camY;
+            this.rotation = 0;
+            this.RotationBinding.Update();
+        }
+    }
+
+    private void ResetNorth() {
+        if (this.MapName is not null
+            && !String.IsNullOrEmpty(this.MapName)
+            && !String.IsNullOrWhiteSpace(this.MapName)) {
+            // dont use this.rotation
+            // this.rotation is a corrected value
+            // here the original camera-rotation is needed
+            float camY = this.World.GetExistingSystemManaged<CameraUpdateSystem>().activeCameraController.rotation.y;
+            this.CompassModSettings.MapOrientations[this.MapName] = 0;
+            // no need to correct the value, cause rotation is equal to camY now
+            this.rotation = camY;
+            this.RotationBinding.Update();
+        }
+    }
+
     /// <summary>
     ///     corrects values that come from the UI
     ///     <br/>
@@ -164,7 +239,7 @@ internal partial class CompassUISystem : UISystemBase {
     ///     corrected y-value
     /// </returns>
     private float CorrectNorthPositive(float angle) {
-        float northCorrection = this.MyMapSystem.GetNorthCorrection();
+        float northCorrection = this.GetNorthCorrection();
         float corrected = angle + northCorrection;
         float y = this.CorrectAngle(corrected);
         return y;
@@ -185,7 +260,7 @@ internal partial class CompassUISystem : UISystemBase {
     ///     the corrected y-value
     /// </returns>
     private float CorrectNorthNegative(float angle) {
-        float northCorrection = this.MyMapSystem.GetNorthCorrection();
+        float northCorrection = this.GetNorthCorrection();
         float corrected = angle - northCorrection;
         float y = this.CorrectAngle(corrected);
         return y;
