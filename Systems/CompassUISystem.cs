@@ -205,7 +205,7 @@ internal partial class CompassUISystem : UISystemBase {
             // this.rotation is a corrected value
             // here the original camera-rotation is needed
             float camY = this.World.GetExistingSystemManaged<CameraUpdateSystem>().activeCameraController.rotation.y;
-            this.CompassModSettings.MapOrientations[this.MapName] = camY;
+            this.CompassModSettings.MapOrientations[this.MapName] = (float) Math.Round(camY);
             this.rotation = 0;
             this.RotationBinding.Update();
         }
@@ -221,7 +221,7 @@ internal partial class CompassUISystem : UISystemBase {
             float camY = this.World.GetExistingSystemManaged<CameraUpdateSystem>().activeCameraController.rotation.y;
             this.CompassModSettings.MapOrientations[this.MapName] = 0;
             // no need to correct the value, cause rotation is equal to camY now
-            this.rotation = camY;
+            this.rotation = (float) Math.Round(camY);
             this.RotationBinding.Update();
         }
     }
