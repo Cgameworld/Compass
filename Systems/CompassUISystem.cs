@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 
-using Colossal.IO.AssetDatabase;
 using Colossal.Serialization.Entities;
 using Colossal.UI.Binding;
 
@@ -137,7 +136,8 @@ internal partial class CompassUISystem : UISystemBase {
         //Mod.Log.Info("SetCardinalDirectionMode: " + enabled);
         this.CompassModSettings.CardinalDirectionMode = enabled;
         this.CardinalDirectionBinding.Update();
-        AssetDatabase.global.SaveSettingsNow();
+        // i think this is a bad idea
+        // AssetDatabase.global.SaveSettingsNow();
     }
     private IEnumerator SmoothRotation(float y) {
         CameraUpdateSystem cameraUpdateSystem = this.World.GetExistingSystemManaged<CameraUpdateSystem>();
