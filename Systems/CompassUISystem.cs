@@ -62,14 +62,14 @@ namespace Compass
             Mod.log.Info("SetCardinalDirectionMode: " +  enabled);
             Mod.CompassModSettings.CardinalDirectionMode = enabled;
             cardinalDirectionBinding.Update();
-            AssetDatabase.global.SaveSettingsNow();
+            AssetDatabase.global.SaveSettings();
         }
 
         private void RelativeNorthOffset(float num)
         {
             Mod.CompassModSettings.RelativeNorthOffset = num;
             relativeNorthOffsetBinding.Update();
-            AssetDatabase.global.SaveSettingsNow();
+            AssetDatabase.global.SaveSettings();
         }
         private IEnumerator SmoothRotation(float angle)
         {

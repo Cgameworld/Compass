@@ -43,7 +43,7 @@ const register: ModRegistrar = (moduleRegistry) => {
 
         useEffect(() => {
             if (showSettings) {
-                const parentElement = editor ? document.querySelector('.main_k4u') : document.querySelector('.tutorial-renderer_wve.tutorials-renderer_uj6');
+                const parentElement = editor ? document.querySelector('.main_k4u') : document.querySelector('.main-container__E2');
                 if (parentElement) {
                     const settingsRoot = document.createElement('div');
                     settingsRoot.id = editor ? '' : 'top-right-layout_sSC';
@@ -113,12 +113,14 @@ const register: ModRegistrar = (moduleRegistry) => {
     const SettingsWindow: React.FC<{ onClose: () => void, cardinalDirectionMode: boolean, editor: boolean }> = ({ onClose, cardinalDirectionMode, editor }) => {
         
         const handleSliderInputChange = (newValue: number) => {
+            /*
             console.table({
                 newValue: newValue,
                 RotationNum: RotationNum,
                 RelativeNorthOffset: RelativeNorthOffset,
                 TriggerSend: newValue + RelativeNorthOffset,
             });
+            */
             trigger("Compass", "SetToAngle", newValue + RelativeNorthOffset);
         };
 
