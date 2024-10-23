@@ -83,7 +83,7 @@ const SliderMod: React.FC<SliderModProps> = ({ title, min, max, sliderPos, onInp
             <div className="left_Lgw row_S2v" style={{ fontSize: '18rem', alignItems: 'center' }}>{title}</div>
             <div className="right_k3O row_S2v" style={{ width: '75%', paddingRight: '5rem' }}>
                 <div className="control_Hds" style={{ width: '67.5%', position: 'relative', left: '20rem' }}>
-                    <div className="slider-container_Q_K">
+                    <div className="slider-container_Q_K" style={{ height: '10rem' }}>
                         <div className="slider_KXG slider_pUS horizontal slider_ROT">
                             <div className="track-bounds_H8_" ref={sliderRef}>
                                 <div className="range-bounds_lNt" style={{ width: `${(sliderWidth / (window.innerWidth / 1920))}rem` }} onMouseDown={handleMouseDown}>

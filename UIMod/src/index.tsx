@@ -47,6 +47,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                 if (parentElement) {
                     const settingsRoot = document.createElement('div');
                     settingsRoot.id = editor ? '' : 'top-right-layout_sSC';
+                    settingsRoot.style.width = '100%';
                     parentElement.appendChild(settingsRoot);
                     ReactDOM.render(<SettingsWindow onClose={toggleSettings} cardinalDirectionMode={cardinalDirectionMode} editor={editor} />, settingsRoot);
 
@@ -130,7 +131,7 @@ const register: ModRegistrar = (moduleRegistry) => {
         return (
             <div className="panel_YqS expanded collapsible advisor-panel_dXi advisor-panel_mrr top-right-panel_A2r" style={{
                 position: 'absolute',
-                top: editor ? '120rem' : '50rem',
+                top: editor ? '120rem' : '60rem',
                 left: editor ? '10rem' : undefined,
                 right: editor ? undefined : '0rem',
                 display: 'flex',
