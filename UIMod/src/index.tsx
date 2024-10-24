@@ -224,22 +224,23 @@ const register: ModRegistrar = (moduleRegistry) => {
     moduleRegistry.append('GameTopRight', CustomMenuButton);
 
     const MapEditorButton: React.FC = () => {
+        const [mounted, setMounted] = useState(false);
+
         useEffect(() => {
-            const targetContainer = document.querySelector('.content_XD5.content_AD7.child-opacity-transition_nkS.content_Hzl .row_B8G') as HTMLElement;
-
+            const targetContainer = document.querySelector('.content_XD5.content_AD7.child-opacity-transition_nkS.content_Hzl .row_B8G');
             if (targetContainer) {
-                const newDiv = document.createElement('div');
-                ReactDOM.render(
-                    <div style={{ display: 'flex', flexDirection: 'row' }}><CustomMenuButton editor={true} />
-                    </div>,
-                    newDiv
-                );
-
-                targetContainer.insertBefore(newDiv, targetContainer.firstChild);
+                setMounted(true);
             }
         }, []);
 
-        return null;
+        if (!mounted) return null;
+
+        return ReactDOM.createPortal(
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <CustomMenuButton editor={true} />
+            </div>,
+            document.querySelector('.content_XD5.content_AD7.child-opacity-transition_nkS.content_Hzl .row_B8G')!
+        );
     };
 
     moduleRegistry.append('Editor', MapEditorButton);
