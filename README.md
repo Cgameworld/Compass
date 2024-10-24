@@ -4,11 +4,20 @@ Compass is a mod for Cities: Skylines 2 that adds a new dynamic icon to the game
 
 Download Here: [https://mods.paradoxplaza.com/mods/86260/Windows](https://mods.paradoxplaza.com/mods/86260/Windows)
 
+
 # Settings
 
 The mod has two display modes. The first, Compass Wheel Mode shows a compact compass wheel icon. The second, Cardinal Direction Mode displays the cardinal direction (such as N, NW, E, etc).
 
-In the settings window, the heading can be precisely changed, and a Reset To North button is included.
+In the settings window, the heading can be precisely changed, the relative north can be changed and a "Reset To North" button is included.
+
+# Localization
+
+Currently Supported Languages:
+
+- English
+
+Help translate this mod via Crowdin: [https://crowdin.com/project/cs2-compass-mod](https://crowdin.com/project/cs2-compass-mod)
 
 # Notes
 
