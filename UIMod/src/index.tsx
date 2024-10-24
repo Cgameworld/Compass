@@ -6,15 +6,32 @@ import SliderMod from './components/slider_modified'
 import ButtonMod from './components/button_modified';
 import engine from 'cohtml/cohtml';
 import { VanillaComponentsResolver } from '../types/internal';
+import { useLocalization } from 'cs2/l10n';
 
 
 const register: ModRegistrar = (moduleRegistry) => {
 
     const { DescriptionTooltip } = VanillaComponentsResolver.instance;
 
+    // Translation.
+    function translate(key: string) {
+        const { translate } = useLocalization();
+        return translate(key);
+    }
+
     const Rotation$ = bindValue<number>('Compass', 'Rotation');
     const CardinalDirectionMode$ = bindValue<boolean>('Compass', 'CardinalDirectionMode');
     const RelativeNorthOffset$ = bindValue<number>('Compass', 'RelativeNorthOffset');
+
+    let TitleBarLabel: string | null;
+    let CardinalDirectionModeLabel: string | null;
+    let OnLabel: string | null;
+    let OffLabel: string | null;
+    let SetLabel: string | null;
+    let RelativeNorthLabel: string | null;
+    let HeadingLabel: string | null;
+    let ResetToRelativeNorthLabel: string | null;
+    let ResetToNorthLabel: string | null;
 
     const getDirection = (rotation: number): string => {
         const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
@@ -28,6 +45,16 @@ const register: ModRegistrar = (moduleRegistry) => {
     }
 
     const CustomMenuButton: React.FC<CustomMenuButtonProps> = ({ editor = false }) => {
+        TitleBarLabel = translate("Compass.TitleBarLabel");
+        CardinalDirectionModeLabel = translate("Compass.CardinalDirectionModeLabel");
+        OnLabel = translate("Compass.OnLabel");
+        OffLabel = translate("Compass.OffLabel");
+        SetLabel = translate("Compass.SetLabel");
+        RelativeNorthLabel = translate("Compass.RelativeNorthLabel");
+        HeadingLabel = translate("Compass.HeadingLabel");
+        ResetToRelativeNorthLabel = translate("Compass.ResetToRelativeNorthLabel");
+        ResetToNorthLabel = translate("Compass.ResetToNorthLabel");
+
         const [showSettings, setShowSettings] = useState(false);
         const cardinalDirectionMode: boolean = useValue(CardinalDirectionMode$);
 
@@ -60,10 +87,10 @@ const register: ModRegistrar = (moduleRegistry) => {
         }, [showSettings, cardinalDirectionMode]);
 
         const currentOrientation = Math.round((useValue(Rotation$) + 360) % 360) + "\u00b0 " + getDirection(AdjustedRotation);
-        const toolTipDescription = currentOrientation + " - Click to open options";
+        const toolTipDescription = currentOrientation + " 11- " + translate("Compass.TooltipDescription");
 
         return (
-            <DescriptionTooltip title="Compass" description={toolTipDescription}> 
+            <DescriptionTooltip title={translate("Compass.TooltipTitle")} description={toolTipDescription}> 
                 <button
                     id="MapTextureReplacer-MainGameButton"
                     className={editor ? "button_FBo button_ECf item_It6 item-mouse-states_Fmi item-selected_tAM item-focused_FuT toggle-states_DTm button_FBo button_ECf item_It6 item-mouse-states_Fmi item-selected_tAM item-focused_FuT toggle-states_DTm item_IYJ" : "button_ke4 button_h9N"}
@@ -141,7 +168,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                 <div className="header_H_U header_Bpo child-opacity-transition_nkS">
                     <div className="title-bar_PF4">
                         <div className="icon-space_h_f"></div>
-                        <div className="title_SVH title_zQN">Compass Settings</div>
+                        <div className="title_SVH title_zQN">{TitleBarLabel}</div>
                         <button className="button_bvQ button_bvQ close-button_wKK" onClick={onClose}>
                             <div className="tinted-icon_iKo icon_PhD" style={{ maskImage: 'url(Media/Glyphs/Close.svg)' }}></div>
                         </button>
@@ -153,15 +180,15 @@ const register: ModRegistrar = (moduleRegistry) => {
                             <div className="infoview-panel-section_RXJ">
                                 <div className="content_1xS focusable_GEc item-focused_FuT">
                                     <div className="row_S2v" style={{paddingBottom:'10rem'}}>
-                                        <div className="left_Lgw row_S2v" style={{ fontSize: '18rem', alignItems: 'center' }}>Cardinal Direction Mode</div>
+                                        <div className="left_Lgw row_S2v" style={{ fontSize: '18rem', alignItems: 'center' }}>{CardinalDirectionModeLabel}</div>
                                         <div className="right_k3O row_S2v">
-                                            <ButtonMod active={cardinalDirectionMode} inactiveText={"Off"} text={"On"} onClick={() => trigger("Compass", "SetCardinalDirectionMode", !cardinalDirectionMode)}/>
+                                            <ButtonMod active={cardinalDirectionMode} inactiveText={OffLabel} text={OnLabel} onClick={() => trigger("Compass", "SetCardinalDirectionMode", !cardinalDirectionMode)}/>
                                         </div>
                                     </div>
                                     <div className="row_S2v" style={{ paddingBottom: '10rem' }}>
-                                        <div className="left_Lgw row_S2v" style={{ fontSize: '18rem', alignItems: 'center' }}>Relative North</div>
+                                        <div className="left_Lgw row_S2v" style={{ fontSize: '18rem', alignItems: 'center' }}>{RelativeNorthLabel}</div>
                                         <div className="right_k3O row_S2v">
-                                            <ButtonMod active={RelativeNorthOffset !== 0} inactiveText={"Set"} text={(RelativeNorthOffset > 0 ? "+" : "") + RelativeNorthOffset + "\u00b0"} onClick={() => {
+                                            <ButtonMod active={RelativeNorthOffset !== 0} inactiveText={SetLabel} text={(RelativeNorthOffset > 0 ? "+" : "") + RelativeNorthOffset + "\u00b0"} onClick={() => {
                                                 let adjustedRotationNum = RotationNum;
                                                 if (RotationNum > 180) {
                                                     adjustedRotationNum = RotationNum - 360;
@@ -177,12 +204,12 @@ const register: ModRegistrar = (moduleRegistry) => {
                                             }}>Reset</button>
                                         </div>
                                     </div>
-                                    <SliderMod title={"Heading"} min={0} max={359} sliderPos={(RotationNum - RelativeNorthOffset + 360) % 360} onInputChange={handleSliderInputChange} />                                   
+                                    <SliderMod title={HeadingLabel} min={0} max={359} sliderPos={(RotationNum - RelativeNorthOffset + 360) % 360} onInputChange={handleSliderInputChange} />                                   
                                     <div className="row_S2v" style={{ paddingTop: '10rem', paddingBottom: '10rem' }}>
                                         <button className="button_WWa button_SH8" style={{ justifyContent: 'center' }} onClick={() => {
                                             trigger("Compass", "SetToNorth");
                                             engine.trigger("audio.playSound", "select-item", 1);
-                                        }}>{RelativeNorthOffset !== 0 ? "Reset to Relative North" : "Reset to North"}</button>
+                                        }}>{RelativeNorthOffset !== 0 ? ResetToRelativeNorthLabel : ResetToNorthLabel}</button>
                                     </div>
                                     <div className="bottom-padding_JS3"></div>
                                 </div>

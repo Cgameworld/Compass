@@ -54,27 +54,4 @@ namespace Compass
 
         }
     }
-
-    public class LocaleEN : IDictionarySource
-    {
-        private readonly Setting m_Setting;
-        public LocaleEN(Setting setting)
-        {
-            m_Setting = setting;
-        }
-        public IEnumerable<KeyValuePair<string, string>> ReadEntries(IList<IDictionaryEntryError> errors, Dictionary<string, int> indexCounts)
-        {
-            return new Dictionary<string, string>
-            {
-                { m_Setting.GetSettingsLocaleID(), "Compass" },
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ResetModSettings)), "Reset Mod Settings" },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ResetModSettings)), "Reset Mod Settings to Default Values"},
-                { m_Setting.GetOptionWarningLocaleID(nameof(Setting.ResetModSettings)), "Are you sure you want to reset all mod settings?"}
-            };
-        }
-
-        public void Unload()
-        {
-        }
-    }
 }

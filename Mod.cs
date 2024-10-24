@@ -30,7 +30,7 @@ namespace Compass
             CompassModSettings = new Setting(this);
             CompassModSettings.RegisterInOptionsUI();
 
-            GameManager.instance.localizationManager.AddSource("en-US", new LocaleEN(CompassModSettings));
+            Localization.LoadTranslations(CompassModSettings, log);
 
             AssetDatabase.global.LoadSettings(nameof(Compass), CompassModSettings, new Setting(this));
 

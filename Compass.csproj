@@ -2,6 +2,8 @@
 
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
+		<Nullable>enable</Nullable>
+		<LangVersion>9</LangVersion>
 		<TargetFramework>net472</TargetFramework>
 		<Configurations>Debug;Release</Configurations>
 		
@@ -13,6 +15,14 @@
 	<!--Imports must be after PropertyGroup block-->
 	<Import Project="$([System.Environment]::GetEnvironmentVariable('CSII_TOOLPATH', 'EnvironmentVariableTarget.User'))\Mod.props" />
 	<Import Project="$([System.Environment]::GetEnvironmentVariable('CSII_TOOLPATH', 'EnvironmentVariableTarget.User'))\Mod.targets" />
+	<ItemGroup>
+	  <None Remove="l10n\en-US.csv" />
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Include="l10n\en-US.csv">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </EmbeddedResource>
+	</ItemGroup>
 
 	<ItemGroup>
 		<Reference Include="Cinemachine">

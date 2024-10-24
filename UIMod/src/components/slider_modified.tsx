@@ -2,7 +2,7 @@ import engine from 'cohtml/cohtml';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 interface SliderModProps {
-    title: string;
+    title: string | null;
     min: number;
     max: number;
     sliderPos: number;

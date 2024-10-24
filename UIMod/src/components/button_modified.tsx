@@ -5,8 +5,8 @@ interface ButtonModProps {
     active: boolean;
     styles?: React.CSSProperties;
     onClick?: () => void;
-    text?: string;
-    inactiveText?: string;
+    text?: string | null;
+    inactiveText: string | null;
 }
 
 const ButtonMod: React.FC<ButtonModProps> = ({ active, styles = {}, onClick = () => { }, text = "ACTIVE", inactiveText = "INACTIVE" }) => {
