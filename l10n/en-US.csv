@@ -5,6 +5,7 @@
 "Compass.OnLabel","On"
 "Compass.OffLabel","Off"
 "Compass.SetLabel","Set"
+"Compass.ResetLabel","Reset"
 "Compass.RelativeNorthLabel","Relative North"
 "Compass.HeadingLabel","Heading"
 "Compass.ResetToRelativeNorthLabel","Reset to Relative North"

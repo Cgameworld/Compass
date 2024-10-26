@@ -87,7 +87,7 @@ const register: ModRegistrar = (moduleRegistry) => {
         }, [showSettings, cardinalDirectionMode]);
 
         const currentOrientation = Math.round((useValue(Rotation$) + 360) % 360) + "\u00b0 " + getDirection(AdjustedRotation);
-        const toolTipDescription = currentOrientation + " 11- " + translate("Compass.TooltipDescription");
+        const toolTipDescription = currentOrientation + " - " + translate("Compass.TooltipDescription");
 
         return (
             <DescriptionTooltip title={translate("Compass.TooltipTitle")} description={toolTipDescription}> 
@@ -201,7 +201,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                                             }}                                                onClick={() => {
                                                 trigger("Compass", "SetRelativeNorthOffset", 0)
                                                 engine.trigger("audio.playSound", "select-item", 1);
-                                            }}>Reset</button>
+                                                }}>{translate("Compass.ResetLabel")}</button>
                                         </div>
                                     </div>
                                     <SliderMod title={HeadingLabel} min={0} max={359} sliderPos={(RotationNum - RelativeNorthOffset + 360) % 360} onInputChange={handleSliderInputChange} />                                   
