@@ -16,7 +16,7 @@ namespace Compass
 
         private GetterValueBinding<float> rotationBinding;
         public GetterValueBinding<bool> cardinalDirectionBinding;
-        private GetterValueBinding<float> relativeNorthOffsetBinding;
+        public GetterValueBinding<float> relativeNorthOffsetBinding;
 
         protected override void OnCreate()
         {

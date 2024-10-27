@@ -29,6 +29,7 @@ namespace Compass
                 SetDefaults();
                 m_CompassUISystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<CompassUISystem>();
                 m_CompassUISystem.cardinalDirectionBinding.Update();
+                m_CompassUISystem.relativeNorthOffsetBinding.Update();
 
             }
         }
