@@ -44,17 +44,16 @@ If you like this mod be sure to leave an upvote! Thanks
 	<!--Link to the forum post where the mod can be discussed-->
 	<ForumLink Value="https://forum.paradoxplaza.com/forum/threads/compass.1697279/" />
 	<!--Version of the mod-->
-	<ModVersion Value="1.1" />
+	<ModVersion Value="1.1.1" />
 	<!--Recommended version of the base game to use the mod-->
 	<GameVersion Value="1.*" />
 	<!--Dependency for the mod, can be set multiple times-->
 	<Dependency Id="" />
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
   <ChangeLog>
-# v1.1
-* Added ability to set a relative north
-* Added localization support
-* 1.1.10f1 related UI fixes
+# v1.1.1
+* Added Chinese (Simplified), Chinese (Traditional), French, German, Polish, Portuguese (European), Portuguese (Brazilian), Russian and Spanish translations (thanks baka-gourd, allegretic, ti4go, karmel68, Fuchs23, Alex_Word and elGendo87 for their contributions)
+* Fixed issue with relative north info not resetting when clicking "Reset All" in the Compass section of the main game options
   </ChangeLog>
 	<!--External link. supported types are discord, github, youtube, twitch, x, paypal, patreon, buymeacoffee, kofi, crowdin, gitlab-->
   <ExternalLink Type="discord" Url="https://discord.gg/tDZhaMrgsQ" />
