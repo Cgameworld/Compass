@@ -15,13 +15,24 @@ In the settings window, the heading can be precisely changed, the relative north
 
 Currently Supported Languages:
 
+- Chinese (Simplified)
+- Chinese (Traditional)
 - English
+- French
+- German
+- Polish
+- Portuguese (European)
+- Portuguese (Brazilian)
+- Russian
+- Spanish
 
 Help translate this mod via Crowdin: [https://crowdin.com/project/cs2-compass-mod](https://crowdin.com/project/cs2-compass-mod)
 
 # Notes
 
-This mod works in game and in the editor. In game, the icon is added to the top left corner near the settings icon, while in the editor it is added to the top right corner next to the natural resource panel shortcut.
+This mod works in game and in the editor. 
+
+In game, the icon is added to the top left corner near the settings icon, while in the editor it is added to the top right corner next to the natural resource panel shortcut.
 
 # Conclusion
 
