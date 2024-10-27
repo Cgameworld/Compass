@@ -7,39 +7,41 @@ interface SliderModProps {
     max: number;
     sliderPos: number;
     onInputChange: (value: number) => void;
-    scaleWidth: number;
 }
 
-const SliderMod: React.FC<SliderModProps> = ({ title, min, max, sliderPos, onInputChange, scaleWidth}) => {
+const SliderMod: React.FC<SliderModProps> = ({ title, min, max, sliderPos, onInputChange}) => {
     const [sliderWidth, setSliderWidth] = useState<number>(0);
     const [inputValue, setInputValue] = useState<number>(sliderPos);
     const sliderRef = useRef<HTMLDivElement>(null);
     const [scale, setScale] = useState<number>(1);
 
     useLayoutEffect(() => {
-        //const scale = (max - min) / 134.54993;
-        const scale = (max - min) / scaleWidth;
-        setScale(scale);
-        const sliderWidth = (sliderPos - min) / scale;
-        if (sliderWidth > max) {
-            setSliderWidth(max / scale);
-        }
-        else {
-            setSliderWidth(sliderWidth);
+        if (sliderRef.current != null) {
+            const scale = (max - min) / sliderRef.current.getBoundingClientRect().width;
+            setScale(scale);
+            const sliderWidth = (sliderPos - min) / scale;
+            if (sliderWidth > max) {
+                setSliderWidth(max / scale);
+            }
+            else {
+                setSliderWidth(sliderWidth);
+            }
         }
     }, []);
 
     useEffect(() => {
-        const scale = (max - min) / 134.549923;
-        setScale(scale);
-        const sliderWidth = (sliderPos - min) / scale;
-        if (sliderWidth > max) {
-            setSliderWidth(max / scale);
+        if (sliderRef.current != null) {
+            const scale = (max - min) / sliderRef.current.getBoundingClientRect().width;
+            setScale(scale);
+            const sliderWidth = (sliderPos - min) / scale;
+            if (sliderWidth > max) {
+                setSliderWidth(max / scale);
+            }
+            else {
+                setSliderWidth(sliderWidth);
+            }
+            setInputValue(sliderPos);
         }
-        else {
-            setSliderWidth(sliderWidth);
-        }
-        setInputValue(sliderPos);
     }, [sliderPos]);
 
     const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {

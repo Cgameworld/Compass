@@ -143,14 +143,6 @@ const register: ModRegistrar = (moduleRegistry) => {
     const SettingsWindow: React.FC<{ onClose: () => void, cardinalDirectionMode: boolean, editor: boolean }> = ({ onClose, cardinalDirectionMode, editor }) => {
         
         const handleSliderInputChange = (newValue: number) => {
-            /*
-            console.table({
-                newValue: newValue,
-                RotationNum: RotationNum,
-                RelativeNorthOffset: RelativeNorthOffset,
-                TriggerSend: newValue + RelativeNorthOffset,
-            });
-            */
             trigger("Compass", "SetToAngle", newValue + RelativeNorthOffset);
         };
 
@@ -158,21 +150,17 @@ const register: ModRegistrar = (moduleRegistry) => {
         const RelativeNorthOffset: number = Math.round(useValue(RelativeNorthOffset$));
 
         const combinedSetResetLabelLength = (SetLabel || "").length + (ResetLabel || "").length;
-        let sliderScaleWidth = 0;
+
         const getPanelWidth = (length: number) => {
             switch (true) {
                 case length >= 20:
-                    return '460rem';
-                    sliderScaleWidth = 134.54993;
+                    return '400rem';
                 case length >= 10:
-                    return '395rem';
-                    sliderScaleWidth = 134.54993;
+                    return '390rem';
                 default:
                     return '340rem';
-                    sliderScaleWidth = 134.54993;
             }
         };
-
 
         return (
             <div className="panel_YqS expanded collapsible advisor-panel_dXi advisor-panel_mrr top-right-panel_A2r" style={{
@@ -182,7 +170,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                 right: editor ? undefined : '0rem',
                 display: 'flex',
                 width: getPanelWidth(combinedSetResetLabelLength),
-                height: '245rem'
+                height: combinedSetResetLabelLength >= 20 ? '255rem' : '245rem'
             }}>
                 <div className="header_H_U header_Bpo child-opacity-transition_nkS">
                     <div className="title-bar_PF4">
@@ -205,7 +193,11 @@ const register: ModRegistrar = (moduleRegistry) => {
                                         </div>
                                     </div>
                                     <div className="row_S2v" style={{ paddingBottom: '10rem' }}>
-                                        <div className="left_Lgw row_S2v" style={{ fontSize: '18rem', alignItems: 'center' }}>{RelativeNorthLabel}</div>
+                                        <div className="left_Lgw row_S2v" style={{
+                                            fontSize: '18rem',
+                                            alignItems: 'center',
+                                            paddingRight: combinedSetResetLabelLength >= 20 ? '15rem' : undefined
+                                        }}>{RelativeNorthLabel}</div>
                                         <div className="right_k3O row_S2v">
                                             <ButtonMod active={RelativeNorthOffset !== 0} inactiveText={SetLabel} text={(RelativeNorthOffset > 0 ? "+" : "") + RelativeNorthOffset + "\u00b0"} onClick={() => {
                                                 let adjustedRotationNum = RotationNum;
@@ -223,7 +215,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                                                 }}>{ResetLabel}</button>
                                         </div>
                                     </div>
-                                    <SliderMod title={HeadingLabel} min={0} max={359} sliderPos={(RotationNum - RelativeNorthOffset + 360) % 360} onInputChange={handleSliderInputChange} scaleWidth={sliderScaleWidth} />                                   
+                                    <SliderMod title={HeadingLabel} min={0} max={359} sliderPos={(RotationNum - RelativeNorthOffset + 360) % 360} onInputChange={handleSliderInputChange} />                                   
                                     <div className="row_S2v" style={{ paddingTop: '10rem', paddingBottom: '10rem' }}>
                                         <button className="button_WWa button_SH8" style={{ justifyContent: 'center' }} onClick={() => {
                                             trigger("Compass", "SetToNorth");
