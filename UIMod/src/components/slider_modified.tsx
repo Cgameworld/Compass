@@ -7,16 +7,18 @@ interface SliderModProps {
     max: number;
     sliderPos: number;
     onInputChange: (value: number) => void;
+    scaleWidth: number;
 }
 
-const SliderMod: React.FC<SliderModProps> = ({ title, min, max, sliderPos, onInputChange }) => {
+const SliderMod: React.FC<SliderModProps> = ({ title, min, max, sliderPos, onInputChange, scaleWidth}) => {
     const [sliderWidth, setSliderWidth] = useState<number>(0);
     const [inputValue, setInputValue] = useState<number>(sliderPos);
     const sliderRef = useRef<HTMLDivElement>(null);
     const [scale, setScale] = useState<number>(1);
 
     useLayoutEffect(() => {
-        const scale = (max - min) / 134.54993;
+        //const scale = (max - min) / 134.54993;
+        const scale = (max - min) / scaleWidth;
         setScale(scale);
         const sliderWidth = (sliderPos - min) / scale;
         if (sliderWidth > max) {

@@ -28,6 +28,7 @@ const register: ModRegistrar = (moduleRegistry) => {
     let OnLabel: string | null;
     let OffLabel: string | null;
     let SetLabel: string | null;
+    let ResetLabel: string | null;
     let RelativeNorthLabel: string | null;
     let HeadingLabel: string | null;
     let ResetToRelativeNorthLabel: string | null;
@@ -50,6 +51,7 @@ const register: ModRegistrar = (moduleRegistry) => {
         OnLabel = translate("Compass.OnLabel");
         OffLabel = translate("Compass.OffLabel");
         SetLabel = translate("Compass.SetLabel");
+        ResetLabel = translate("Compass.ResetLabel");
         RelativeNorthLabel = translate("Compass.RelativeNorthLabel");
         HeadingLabel = translate("Compass.HeadingLabel");
         ResetToRelativeNorthLabel = translate("Compass.ResetToRelativeNorthLabel");
@@ -155,6 +157,23 @@ const register: ModRegistrar = (moduleRegistry) => {
         const RotationNum: number = Math.round((useValue(Rotation$) + 360) % 360);
         const RelativeNorthOffset: number = Math.round(useValue(RelativeNorthOffset$));
 
+        const combinedSetResetLabelLength = (SetLabel || "").length + (ResetLabel || "").length;
+        let sliderScaleWidth = 0;
+        const getPanelWidth = (length: number) => {
+            switch (true) {
+                case length >= 20:
+                    return '460rem';
+                    sliderScaleWidth = 134.54993;
+                case length >= 10:
+                    return '395rem';
+                    sliderScaleWidth = 134.54993;
+                default:
+                    return '340rem';
+                    sliderScaleWidth = 134.54993;
+            }
+        };
+
+
         return (
             <div className="panel_YqS expanded collapsible advisor-panel_dXi advisor-panel_mrr top-right-panel_A2r" style={{
                 position: 'absolute',
@@ -162,7 +181,7 @@ const register: ModRegistrar = (moduleRegistry) => {
                 left: editor ? '10rem' : undefined,
                 right: editor ? undefined : '0rem',
                 display: 'flex',
-                width: '340rem',
+                width: getPanelWidth(combinedSetResetLabelLength),
                 height: '245rem'
             }}>
                 <div className="header_H_U header_Bpo child-opacity-transition_nkS">
@@ -201,10 +220,10 @@ const register: ModRegistrar = (moduleRegistry) => {
                                             }}                                                onClick={() => {
                                                 trigger("Compass", "SetRelativeNorthOffset", 0)
                                                 engine.trigger("audio.playSound", "select-item", 1);
-                                                }}>{translate("Compass.ResetLabel")}</button>
+                                                }}>{ResetLabel}</button>
                                         </div>
                                     </div>
-                                    <SliderMod title={HeadingLabel} min={0} max={359} sliderPos={(RotationNum - RelativeNorthOffset + 360) % 360} onInputChange={handleSliderInputChange} />                                   
+                                    <SliderMod title={HeadingLabel} min={0} max={359} sliderPos={(RotationNum - RelativeNorthOffset + 360) % 360} onInputChange={handleSliderInputChange} scaleWidth={sliderScaleWidth} />                                   
                                     <div className="row_S2v" style={{ paddingTop: '10rem', paddingBottom: '10rem' }}>
                                         <button className="button_WWa button_SH8" style={{ justifyContent: 'center' }} onClick={() => {
                                             trigger("Compass", "SetToNorth");
