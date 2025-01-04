@@ -9,7 +9,7 @@
 		
 		<!--The file where mod information which is required for publishing mod on PDX mods are stored-->
 		<PublishConfigurationPath>Properties\PublishConfiguration.xml</PublishConfigurationPath>
-    <Version>1.1.1</Version>
+    <Version>1.1.2</Version>
 	</PropertyGroup>
 	
 	<!--Imports must be after PropertyGroup block-->
@@ -20,6 +20,7 @@
 	  <None Remove="l10n\en-US.csv" />
 	  <None Remove="l10n\es-ES.csv" />
 	  <None Remove="l10n\fr-FR.csv" />
+	  <None Remove="l10n\ko-KR.csv" />
 	  <None Remove="l10n\pl-PL.csv" />
 	  <None Remove="l10n\pt-BR.csv" />
 	  <None Remove="l10n\pt-PT.csv" />
@@ -34,6 +35,9 @@
 	  </EmbeddedResource>
 	  <EmbeddedResource Include="l10n\es-ES.csv" />
 	  <EmbeddedResource Include="l10n\fr-FR.csv" />
+	  <EmbeddedResource Include="l10n\ko-KR.csv">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </EmbeddedResource>
 	  <EmbeddedResource Include="l10n\pl-PL.csv" />
 	  <EmbeddedResource Include="l10n\pt-BR.csv" />
 	  <EmbeddedResource Include="l10n\pt-PT.csv" />
