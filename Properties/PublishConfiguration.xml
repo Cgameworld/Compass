@@ -53,15 +53,15 @@ If you like this mod be sure to leave an upvote! Thanks
 	<!--Link to the forum post where the mod can be discussed-->
 	<ForumLink Value="https://forum.paradoxplaza.com/forum/threads/compass.1697279/" />
 	<!--Version of the mod-->
-	<ModVersion Value="1.1.2" />
+	<ModVersion Value="1.2" />
 	<!--Recommended version of the base game to use the mod-->
 	<GameVersion Value="1.*" />
 	<!--Dependency for the mod, can be set multiple times-->
 	<Dependency Id="" />
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
   <ChangeLog>
-# v1.1.2
-
+# v1.2
+* Added keyboard shortcuts for Reset to North, Set Relative North and Reset Relative North functions
 * Fixed issue with slider not updating to current value when opening panel 
 * Added Korean (thanks TwotoolusFLY_LSh.st) 
   </ChangeLog>

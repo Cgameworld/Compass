@@ -25,10 +25,11 @@ namespace Compass
             if (GameManager.instance.modManager.TryGetExecutableAsset(this, out var asset))
                 log.Info("Mod Directory:" + Path.GetDirectoryName(asset.path));
 
-            updateSystem.UpdateBefore<CompassUISystem>(SystemUpdatePhase.UIUpdate);
-
             CompassModSettings = new Setting(this);
             CompassModSettings.RegisterInOptionsUI();
+            CompassModSettings.RegisterKeyBindings();
+
+            updateSystem.UpdateBefore<CompassUISystem>(SystemUpdatePhase.UIUpdate);
 
             Localization.LoadTranslations(CompassModSettings, log);
 
