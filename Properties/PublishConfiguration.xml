@@ -61,7 +61,7 @@ If you like this mod be sure to leave an upvote! Thanks
 	<!--Change log for new version. Single line or multi line. Supports minimal markdown subset-->
   <ChangeLog>
 # v1.1.2
-
+* 1.2.5f1 patch compatibility 
 * Fixed issue with slider not updating to current value when opening panel 
 * Added Korean (thanks TwotoolusFLY_LSh.st) 
   </ChangeLog>
