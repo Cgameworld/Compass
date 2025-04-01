@@ -1,12 +1,14 @@
 ﻿using Colossal.IO.AssetDatabase;
 using Colossal.UI.Binding;
 using Compass.Helpers;
+using Game.Input;
 using Game.Rendering;
 using Game.UI;
 using Game.UI.InGame;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Compass
 {
@@ -17,6 +19,9 @@ namespace Compass
         private GetterValueBinding<float> rotationBinding;
         public GetterValueBinding<bool> cardinalDirectionBinding;
         public GetterValueBinding<float> relativeNorthOffsetBinding;
+        private ProxyAction m_SetToNorthKeybindAction;
+        private ProxyAction m_SetNorthDirectionKeybindAction;
+        private ProxyAction m_ResetNorthDirectionKeybindAction;
 
         protected override void OnCreate()
         {
@@ -38,6 +43,36 @@ namespace Compass
             AddBinding(this.relativeNorthOffsetBinding);
 
             this.AddBinding(new TriggerBinding<float>("Compass", "SetRelativeNorthOffset", (num) => this.RelativeNorthOffset(num)));
+
+            m_SetToNorthKeybindAction = Mod.CompassModSettings.GetAction("SetToNorthKeybindBinding");
+            m_SetToNorthKeybindAction.shouldBeEnabled = true;
+            m_SetToNorthKeybindAction.onInteraction += (_, phase) =>
+            {
+                if (phase == InputActionPhase.Started)
+                {
+                    SetToNorth();
+                }
+            };
+
+            m_SetNorthDirectionKeybindAction = Mod.CompassModSettings.GetAction("SetNorthDirectionKeybindBinding");
+            m_SetNorthDirectionKeybindAction.shouldBeEnabled = true;
+            m_SetNorthDirectionKeybindAction.onInteraction += (_, phase) =>
+            {
+                if (phase == InputActionPhase.Started)
+                {
+                    RelativeNorthOffset(rotation);
+                }
+            };
+
+            m_ResetNorthDirectionKeybindAction = Mod.CompassModSettings.GetAction("ResetNorthDirectionKeybindBinding");
+            m_ResetNorthDirectionKeybindAction.shouldBeEnabled = true;
+            m_ResetNorthDirectionKeybindAction.onInteraction += (_, phase) =>
+            {
+                if (phase == InputActionPhase.Started)
+                {
+                    RelativeNorthOffset(0);
+                }
+            };
         }
 
         private void SetToAngle(float angle)

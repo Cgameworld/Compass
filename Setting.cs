@@ -1,6 +1,7 @@
 ﻿using Colossal;
 using Colossal.IO.AssetDatabase;
 using Compass;
+using Game.Input;
 using Game.Modding;
 using Game.Settings;
 using Game.UI;
@@ -19,6 +20,16 @@ namespace Compass
         {
             SetDefaults();
         }
+
+        [SettingsUIKeyboardBinding(BindingKeyboard.N, "SetToNorthKeybindBinding")]
+        public ProxyBinding SetToNorthKeybind { get; set; }
+
+        [SettingsUIKeyboardBinding(BindingKeyboard.N, "SetNorthDirectionKeybindBinding", alt: true)]
+        public ProxyBinding SetNorthDirectionKeybind { get; set; }
+
+        [SettingsUIKeyboardBinding(BindingKeyboard.N, "ResetNorthDirectionKeybindBinding", ctrl: true, alt: true)]
+        public ProxyBinding ResetNorthDirectionKeybind { get; set; }
+
 
         [SettingsUIButton]
         [SettingsUIConfirmation]
