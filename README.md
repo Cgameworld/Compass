@@ -32,7 +32,7 @@ Help translate this mod via Crowdin: [https://crowdin.com/project/cs2-compass-mo
 
 This mod works in game and in the editor. 
 
-In game, the icon is added to the top left corner near the settings icon, while in the editor it is added to the top right corner next to the natural resource panel shortcut.
+In game, the icon is added to the top right corner near the settings icon, while in the editor it is added to the top left corner next to the natural resource panel shortcut.
 
 # Conclusion
 
