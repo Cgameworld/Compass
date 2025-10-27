@@ -23,3 +23,5 @@
 "Options.OPTION_DESCRIPTION:SetToNorthKeybind","重設至北方的鍵盤快速鍵"
 "Options.OPTION_DESCRIPTION:SetNorthDirectionKeybind","設定相對北方的鍵盤快速鍵"
 "Options.OPTION_DESCRIPTION:ResetNorthDirectionKeybind","重設相對北方的鍵盤快速鍵"
+"Options.OPTION:ModVersion","模組版本"
+"Options.OPTION_DESCRIPTION:ModVersion","已安裝的模組版本"

@@ -23,3 +23,5 @@
 "Options.OPTION_DESCRIPTION:SetToNorthKeybind","Skrót klawiaturowy do przywrócenia na północ"
 "Options.OPTION_DESCRIPTION:SetNorthDirectionKeybind","Skrót klawiaturowy do ustawiania ustalanej północy"
 "Options.OPTION_DESCRIPTION:ResetNorthDirectionKeybind","Skrót klawiaturowy do resetowania ustalanej północy"
+"Options.OPTION:ModVersion","Wersja"
+"Options.OPTION_DESCRIPTION:ModVersion","Numer wersji zainstalowanego moda"

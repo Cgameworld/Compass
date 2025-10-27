@@ -7,6 +7,7 @@ using Game.Settings;
 using Game.UI;
 using Game.UI.Widgets;
 using System.Collections.Generic;
+using System.Reflection;
 using Unity.Entities;
 
 namespace Compass
@@ -30,6 +31,10 @@ namespace Compass
         [SettingsUIKeyboardBinding(BindingKeyboard.N, "ResetNorthDirectionKeybindBinding", ctrl: true, alt: true)]
         public ProxyBinding ResetNorthDirectionKeybind { get; set; }
 
+        [SettingsUISection("OtherSection")]
+        public string ModVersion => Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
+        [SettingsUISection("OtherSection")]
 
         [SettingsUIButton]
         [SettingsUIConfirmation]

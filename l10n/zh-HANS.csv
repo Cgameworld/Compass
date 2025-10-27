@@ -23,3 +23,5 @@
 "Options.OPTION_DESCRIPTION:SetToNorthKeybind","重置为北方的键盘快捷键"
 "Options.OPTION_DESCRIPTION:SetNorthDirectionKeybind","设置相对北方的键盘快捷键"
 "Options.OPTION_DESCRIPTION:ResetNorthDirectionKeybind","重置相对北方的键盘快捷键"
+"Options.OPTION:ModVersion","模组版本"
+"Options.OPTION_DESCRIPTION:ModVersion","已安装的模组版本"

@@ -23,3 +23,5 @@
 "Options.OPTION_DESCRIPTION:SetToNorthKeybind","Клавиша для сброса на Север"
 "Options.OPTION_DESCRIPTION:SetNorthDirectionKeybind","Клавиша для установки относительного Севера"
 "Options.OPTION_DESCRIPTION:ResetNorthDirectionKeybind","Клавиша для сброса относительного Севера"
+"Options.OPTION:ModVersion","Версия мода"
+"Options.OPTION_DESCRIPTION:ModVersion","Установленная версия мода"

@@ -23,3 +23,5 @@
 "Options.OPTION_DESCRIPTION:SetToNorthKeybind","Keyboard Shortcut to Reset to North"
 "Options.OPTION_DESCRIPTION:SetNorthDirectionKeybind","Keyboard Shortcut to Set Relative North"
 "Options.OPTION_DESCRIPTION:ResetNorthDirectionKeybind","Keyboard Shortcut to Reset Relative North"
+"Options.OPTION:ModVersion","Mod Version"
+"Options.OPTION_DESCRIPTION:ModVersion","Installed version of mod"

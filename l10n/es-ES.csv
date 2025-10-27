@@ -23,3 +23,5 @@
 "Options.OPTION_DESCRIPTION:SetToNorthKeybind","Atajo de teclado para restablecer al norte"
 "Options.OPTION_DESCRIPTION:SetNorthDirectionKeybind","Atajo de teclado para establecer norte relativo"
 "Options.OPTION_DESCRIPTION:ResetNorthDirectionKeybind","Atajo de teclado para restablecer norte relativo"
+"Options.OPTION:ModVersion","Versión del Mod"
+"Options.OPTION_DESCRIPTION:ModVersion","Versión instalada del Mod"

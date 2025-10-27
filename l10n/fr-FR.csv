@@ -23,3 +23,5 @@
 "Options.OPTION_DESCRIPTION:SetToNorthKeybind","Raccourci clavier pour réinitialiser le Nord"
 "Options.OPTION_DESCRIPTION:SetNorthDirectionKeybind","Raccourci clavier pour définir le Nord relatif"
 "Options.OPTION_DESCRIPTION:ResetNorthDirectionKeybind","Raccourci clavier pour réinitialiser le Nord relatif"
+"Options.OPTION:ModVersion","Version du mod"
+"Options.OPTION_DESCRIPTION:ModVersion","Version du mod installé"

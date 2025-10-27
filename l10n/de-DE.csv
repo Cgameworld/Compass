@@ -23,3 +23,5 @@
 "Options.OPTION_DESCRIPTION:SetToNorthKeybind","Tastaturkürzel zum Zurücksetzen nach Norden"
 "Options.OPTION_DESCRIPTION:SetNorthDirectionKeybind","Tastaturkürzel zum Setzen des relativen Nordens"
 "Options.OPTION_DESCRIPTION:ResetNorthDirectionKeybind","Tastaturkürzel zum Zurücksetzen des relativen Nordens"
+"Options.OPTION:ModVersion","Mod-Version"
+"Options.OPTION_DESCRIPTION:ModVersion","Installierte Version von Mod"
